@@ -1,4 +1,4 @@
-<?php namespace flimsy;
+<?php
 
 function flimsy_autoload($class){
 	$path = constant('FLIMSY_ROOT').'/';
@@ -15,5 +15,5 @@ function flimsy_autoload($class){
 	}
 }
 
-spl_autoload_register('flimsy\flimsy_autoload');
+spl_autoload_register('flimsy_autoload');
 ?>

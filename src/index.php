@@ -22,10 +22,18 @@ catch(Exception $e){
 }
 
 // setup router
+require_once 'control/HomeController.php';
+require_once 'view/HomeView.php';
+
 $router = new Router('web_exp');
 
-$router->attach(new Route());
-$router->attach(new Route('about'));
+$router->attach(new Route('/',
+				array('GET'),
+				new HomeController(new HomeView($smarty, 'template/layout.html'))));
+
+$router->attach(new Route('/about',
+				array('GET'),
+				new HomeController(new HomeView($smarty, 'template/layout.html'))));
 
 try{
 	$router->resolve();
@@ -38,20 +46,8 @@ catch(RouteUnresolvedException $e){
 	print $e->getMessage();
 	exit;
 }
-
-// create view and display page
-/*require_once 'control/HomeController.php';
-require_once 'view/HomeView.php';
-
-$controller = new HomeController();
-$view = new HomeView($controller, $smarty, 'template/layout.html');
-
-$controller->exec();
-
-try{
-    $view->display();
+catch(RouteUnacceptedRequestException $e){
+	print $e->getMessage();
+	exit;
 }
-catch(ViewNotFound $e){
-    print '#404: '.$e->getMessage();
-}*/
 ?>

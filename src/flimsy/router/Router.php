@@ -34,16 +34,22 @@ class Router{
 
 	function resolve(){
 		try{
-			$path = @parse_url($_SERVER['REQUEST_URI'])['path'];
-			$path = preg_replace('~/?'.$this->basePath.'/?~i', '', $path);
+			$route = @parse_url(trim($_SERVER['REQUEST_URI'], '/'))['path'];
+			$route = preg_replace('~/?'.$this->basePath.'/?~i', '', $route);
 		}
 		catch(Exception $e){
 			throw new RoutePathException();
 		}
 
-		if(!isset($this->routes[$path])){
-			throw new RouteUnresolvedException($path);
+		if(!isset($this->routes[$route])){
+			throw new RouteUnresolvedException($route);
 		}
+
+		if(!in_array($_SERVER['REQUEST_METHOD'], $this->routes[$route]->getRequestMethods())){
+			throw new RouteUnacceptedRequestException($_SERVER['REQUEST_METHOD']);
+		}
+
+		$this->routes[$route]->getController()->exec();
 	}
 }
 
@@ -60,6 +66,14 @@ class RouteUnresolvedException extends Exception{
 
 	function __construct($url = ''){
 		Exception::__construct(RouteUnresolvedException::MESSAGE.$url);
+	}
+}
+
+class RouteUnacceptedRequestException extends Exception{
+	const MESSAGE = 'The route refused the request method: ';
+
+	function __construct($method = ''){
+		Exception::__construct(RouteUnacceptedRequestException::MESSAGE.$method);
 	}
 }
 ?>
