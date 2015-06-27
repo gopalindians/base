@@ -1,53 +1,58 @@
+This sample does not work yet!
+
 <?php
+exit;
+
 session_start();
 
 define('FLIMSY_ROOT', 'lib/flimsy');
 
-require_once 'lib/smarty/Smarty.class.php';
 require_once 'lib/flimsy/flimsy.php';
 
-// setup smarty
-$smarty = new Smarty();
-$smarty->template_dir = 'template';
-$smarty->compile_dir = 'template_c';
-$smarty->cache_dir = 'cache';
+function exception($e){
+	print $e->getCode().': '.$e->getMessage();
+	exit;
+}
 
 // connect to database
 try{
 	$db = new MySQL('localhost', 'root', '', 'oop');
 }
 catch(Exception $e){
-	print $e->getMessage();
-	exit;
+	exception($e);
 }
 
 // setup router
-require_once 'control/HomeController.php';
-require_once 'view/HomeView.php';
-
 $router = new Router('web_exp');
 
-$router->attach(new Route('/',
-				array('GET'),
-				new HomeController(new HomeView($smarty, 'template/layout.html'))));
+$router->when('/:welcome?/:nr?',
+			  array('GET'),
+			  new HomeController(new HomeView($smarty, 'template/layout.html')));
 
-$router->attach(new Route('/about',
-				array('GET'),
-				new HomeController(new HomeView($smarty, 'template/layout.html'))));
+$router->when('/about/',
+			  array('GET'),
+			  new AboutController(new AboutView($smarty, 'template/layout.html')));
+
+$router->when('/form',
+			  array('POST'),
+			  new FormController());
+
+$router->when('/404',
+			  array('GET'),
+			  new Error404Controller());
+
+$router->otherwise('/404');
 
 try{
 	$router->resolve();
 }
 catch(RouterPathException $e){
-	print $e->getMessage();
-	exit;
+	exception($e);
 }
 catch(RouteUnresolvedException $e){
-	print $e->getMessage();
-	exit;
+	exception($e);
 }
 catch(RouteUnacceptedRequestException $e){
-	print $e->getMessage();
-	exit;
+	exception($e);
 }
 ?>

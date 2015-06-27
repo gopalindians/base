@@ -1,23 +1,53 @@
 <?php
-
 class Router{
 	private $routes = array();
 	private $basePath = '';
+	private $redirect = null;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param optional base path, required to ignore part of routes (URL)
+	 */
 	function __construct($basePath = ''){
 		$this->basePath = $basePath;
 	}
 
-	function attach(Route $route){
-		if(isset($this->routes[$route->getRoute()])){
+	/**
+	 * Registers a new route.
+	 *
+	 * @param the route to resolve
+	 * @see Route constructor
+	 * @param array of allowed methods
+	 * @see Route constructor
+	 * @param the controller for this route
+	 * @see Route constructor
+	 */
+	function when($route, array $method, Controller $controller){
+		if(isset($this->routes[$route])){
 			return false;
 		}
 
-		$this->routes[$route->getRoute()] = $route;
+		$this->routes[$route] = new Route($route, $method, $controller);
 
 		return true;
 	}
 
+	/**
+	 * Alternative routing, if a route cannot be resolved.
+	 * If the alternative route cannot be resolved, an exception will be thrown.
+	 *
+	 * @param alternative route
+	 */
+	function otherwise($route){
+		$this->redirect = $route;
+	}
+
+	/**
+	 * Returns a Route object by route.
+	 *
+	 * @return Route
+	 */
 	function get($route){
 		if(!isset($this->routes[$route])){
 			return null;
@@ -26,54 +56,95 @@ class Router{
 		return $this->routes[$route];
 	}
 
+	/**
+	 * Removes a route to resolve.
+	 *
+	 * @return void
+	 */
 	function remove($route){
 		if(isset($this->routes[$route])){
 			unset($this->routes[$route]);
 		}
 	}
 
-	function resolve(){
+	private function resolveWithRedirect(){
 		try{
-			$route = @parse_url(trim($_SERVER['REQUEST_URI'], '/'))['path'];
-			$route = preg_replace('~/?'.$this->basePath.'/?~i', '', $route);
+			$this->resolveWithoutRedirect();
+		}
+		catch(Exception $e){
+			$this->resolveWithoutRedirect($this->redirect);
+		}
+	}
+
+	private function resolveWithoutRedirect($url = null){
+		try{
+			if(!$url){
+				$route = @parse_url($_SERVER['REQUEST_URI'])['path'];
+				$route = preg_replace('~/?'.$this->basePath.'~i', '', $route);
+			}
+			else{
+				$route = $url;
+			}
 		}
 		catch(Exception $e){
 			throw new RoutePathException();
 		}
 
-		if(!isset($this->routes[$route])){
-			throw new RouteUnresolvedException($route);
+		foreach($this->routes AS $value){
+			if($value->matches($route)){
+				if(!in_array($_SERVER['REQUEST_METHOD'], $value->getRequestMethods())){
+					throw new RouteUnacceptedRequestException($_SERVER['REQUEST_METHOD']);
+				}
+
+				$value->getController()->exec($value->getParams());
+
+				return;
+			}
 		}
 
-		if(!in_array($_SERVER['REQUEST_METHOD'], $this->routes[$route]->getRequestMethods())){
-			throw new RouteUnacceptedRequestException($_SERVER['REQUEST_METHOD']);
-		}
+		throw new RouteUnresolvedException($route);
+	}
 
-		$this->routes[$route]->getController()->exec();
+	/**
+	 * Resolves current URL.
+	 *
+	 * @return void
+	 * @throws RoutePathException, RouteUnresolvedException, RouteUnacceptedRequestException
+	 */
+	function resolve(){
+		if($this->redirect){
+			$this->resolveWithRedirect();
+		}
+		else{
+			$this->resolveWithoutRedirect();
+		}
 	}
 }
 
 class RoutePathException extends Exception{
 	const MESSAGE = 'Could not parse URL, resolving route is not possible.';
+	const CODE = 1;
 
 	function __construct(){
-		Exception::__construct(RouterPathException::MESSAGE);
+		Exception::__construct(RouterPathException::MESSAGE, RoutePathException::CODE);
 	}
 }
 
 class RouteUnresolvedException extends Exception{
 	const MESSAGE = 'The URL could not be resolved to a route: ';
+	const CODE = 2;
 
 	function __construct($url = ''){
-		Exception::__construct(RouteUnresolvedException::MESSAGE.$url);
+		Exception::__construct(RouteUnresolvedException::MESSAGE.$url, RouteUnresolvedException::CODE);
 	}
 }
 
 class RouteUnacceptedRequestException extends Exception{
 	const MESSAGE = 'The route refused the request method: ';
+	const CODE = 3;
 
 	function __construct($method = ''){
-		Exception::__construct(RouteUnacceptedRequestException::MESSAGE.$method);
+		Exception::__construct(RouteUnacceptedRequestException::MESSAGE.$method, RouteUnacceptedRequestException::CODE);
 	}
 }
 ?>

@@ -1,39 +1,37 @@
 <?php
-
 abstract class Controller{
 	protected $view = null;
-	protected $get = null;
-	protected $post = null;
-	protected $session = null;
 
-	function __construct($view){
+	/**
+	 * Constructor.
+	 *
+	 * @param view The View related to this controller.
+	 */
+	function __construct($view = null){
 		$this->view = $view;
-
-		if(count($_GET)){
-			$this->get = $_GET;
-		}
-
-		if(count($_POST)){
-			$this->get = $_POST;
-		}
-
-		if(count($_SESSION)){
-			$this->session = $_SESSION;
-		}
 	}
 
-	abstract function exec();
+	/**
+	 * Execute function, will be executed by Router.
+	 *
+	 * @return void
+	 */
+	abstract function exec(array $get);
 
+	/**
+	 * Resets the controller and environment variables.
+	 *
+	 * @return void
+	 */
 	protected function reset(){
 		unset($_GET);
 		unset($_POST);
 		unset($_SESSION);
-
-		$this->get = null;
-		$this->post = null;
-		$this->session = null;
 	}
 
+	/**
+	 * @return View related to this controller or null.
+	 */
 	function getView(){
 		return $this->view;
 	}
