@@ -7,14 +7,15 @@ A lightweight PHP/JS router and MVC framework.
 1. Download the latest flimsy version.
 2. Copy the flimsy directory to any location into your project you like.
 3. Copy the .htaccess file into your projects root directory.
-4. Setup flimsy in your index.php:
+4. Setup flimsy in your index.php.
+5. And you're ready to use flimsy!
+
+Setup flimsy in your index.php:
 
 ```PHP
 define('FLIMSY_ROOT', 'path/to/flimsy');
 require_once 'path/to/flimsy/flimsy.php'; // this will include all required classes
 ```
-
-5. And you're ready to use flimsy!
 
 ## Usage
 
