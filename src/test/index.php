@@ -1,13 +1,8 @@
-This sample does not work yet!
-
 <?php
-exit;
+define('FLIMSY_ROOT', '../flimsy');
 
-session_start();
-
-define('FLIMSY_ROOT', 'lib/flimsy');
-
-require_once 'lib/flimsy/flimsy.php';
+require_once '../flimsy/flimsy.php';
+require_once 'autoload.php';
 
 function exception($e){
 	print $e->getCode().': '.$e->getMessage();
@@ -16,22 +11,22 @@ function exception($e){
 
 // connect to database
 try{
-	$db = new MySQL('localhost', 'root', '', 'oop');
+	$db = new MySQL('localhost', 'root', '', 'flimsy');
 }
 catch(Exception $e){
 	exception($e);
 }
 
 // setup router
-$router = new Router('web_exp');
+$router = new Router('flimsy/src/test');
 
 $router->when('/:welcome?/:nr?',
 			  array('GET'),
-			  new HomeController(new HomeView($smarty, 'template/layout.html')));
+			  new HomeController(new HomeView()));
 
 $router->when('/about/',
 			  array('GET'),
-			  new AboutController(new AboutView($smarty, 'template/layout.html')));
+			  new AboutController(new AboutView()));
 
 $router->when('/form',
 			  array('POST'),
