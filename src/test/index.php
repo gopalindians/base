@@ -9,14 +9,6 @@ function exception($e){
 	exit;
 }
 
-// connect to database
-try{
-	$db = new MySQL('localhost', 'root', '', 'flimsy');
-}
-catch(Exception $e){
-	exception($e);
-}
-
 // setup router
 $router = new Router('flimsy/src/test');
 
