@@ -1,5 +1,5 @@
 <?php
-class Model{
+interface Model{
 	
 }
 ?>
