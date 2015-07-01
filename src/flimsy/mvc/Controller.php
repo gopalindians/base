@@ -19,13 +19,40 @@ abstract class Controller{
 	abstract function exec(array $get);
 
 	/**
-	 * Resets the controller and environment variables.
+	 * Resets the controller and _all_ environment variables.
 	 *
 	 * @return void
 	 */
 	protected function reset(){
 		unset($_GET);
 		unset($_POST);
+		unset($_SESSION);
+	}
+
+	/**
+	 * Resets _all_ GET environment variables.
+	 *
+	 * @return void
+	 */
+	protected function resetGET(){
+		unset($_GET);
+	}
+
+	/**
+	 * Resets _all_ POST environment variables.
+	 *
+	 * @return void
+	 */
+	protected function resetPOST(){
+		unset($_POST);
+	}
+
+	/**
+	 * Resets _all_ SESSION environment variables.
+	 *
+	 * @return void
+	 */
+	protected function resetSESSION(){
 		unset($_SESSION);
 	}
 
