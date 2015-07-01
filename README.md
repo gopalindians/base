@@ -58,11 +58,10 @@ $router->resolve();
 
 You do not have to pass a view, lets say for form validation controller.
 
-If a path cannot be resolved, the page will be redirected to *otherwise(path)*. If this page also doesn't exists, an *RouteUnresolvedException* will be thrown. There are three possible exceptions thrown by *resolve()*:
+If a path cannot be resolved, the page will be redirected to *otherwise(path)*, which must accepts the required method (GET, POST, ...). If this page also doesn't exists or doesn't accept the HTTP method, an *RouteUnresolvedException* will be thrown. There are two possible exceptions thrown by *resolve()*:
 
 * RouterPathException - the URL cannot be parsed
 * RouteUnresolvedException - the route couldn't be resolved (even after redirecting)
-* RouteUnacceptedRequestException - the parameter count doesn't match the resolved route
 
 Catch them like so:
 
@@ -74,9 +73,6 @@ catch(RouterPathException $e){
 	// handle...
 }
 catch(RouteUnresolvedException $e){
-	// handle...
-}
-catch(RouteUnacceptedRequestException $e){
 	// handle...
 }
 ```

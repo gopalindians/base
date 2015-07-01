@@ -91,11 +91,7 @@ class Router{
 		}
 
 		foreach($this->routes AS $value){
-			if($value->matches($route)){
-				if(!in_array($_SERVER['REQUEST_METHOD'], $value->getRequestMethods())){
-					throw new RouteUnacceptedRequestException($_SERVER['REQUEST_METHOD']);
-				}
-
+			if($value->matches($route) && in_array($_SERVER['REQUEST_METHOD'], $value->getRequestMethods())){
 				$value->getController()->exec($value->getParams());
 
 				return;
@@ -136,15 +132,6 @@ class RouteUnresolvedException extends Exception{
 
 	function __construct($url = ''){
 		Exception::__construct(RouteUnresolvedException::MESSAGE.$url, RouteUnresolvedException::CODE);
-	}
-}
-
-class RouteUnacceptedRequestException extends Exception{
-	const MESSAGE = 'The route refused the request method: ';
-	const CODE = 3;
-
-	function __construct($method = ''){
-		Exception::__construct(RouteUnacceptedRequestException::MESSAGE.$method, RouteUnacceptedRequestException::CODE);
 	}
 }
 ?>
