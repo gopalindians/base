@@ -14,12 +14,12 @@ class Route{
 	/**
  	 * Constructor.
 	 *
- 	 * @param route to resolve realtive to base path
+ 	 * @param route route to resolve realtive to base path
  	 *		  contains the REST URL, e.g. /home and GET parameters, e.g. /:param0/:param1
  	 *		  use ? after a GET parameter to make it optional, e.g. /:param0/:param1?
  	 * 		  where only last parameters can be optional, this won't be resolved correctly: /:param0?/:param1
- 	 * @param allowed request methods as an array, can be one of the following (strings): GET, POST, PUT, DELETE
- 	 * @param controller for this route
+ 	 * @param requestMethods allowed request methods as an array, can be one of the following (strings): GET, POST, PUT, DELETE
+ 	 * @param controller controller for this route
 	 */
 	function __construct($route, array $requestMethods, Controller $controller){
 		$routeParse = $this->resolveRoute($route);
@@ -60,7 +60,7 @@ class Route{
 	/**
 	 * Tests if this route matches the current URL.
 	 *
-	 * @param route to test
+	 * @param route route to test
 	 */
 	function matches($route){
 		$route = rtrim($route, '/');

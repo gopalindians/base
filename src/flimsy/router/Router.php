@@ -7,7 +7,7 @@ class Router{
 	/**
 	 * Constructor.
 	 *
-	 * @param optional base path, required to ignore part of routes (URL)
+	 * @param basePath optional base path, required to ignore part of routes (URL)
 	 */
 	function __construct($basePath = ''){
 		$this->basePath = $basePath;
@@ -16,11 +16,11 @@ class Router{
 	/**
 	 * Registers a new route.
 	 *
-	 * @param the route to resolve
+	 * @param route the route to resolve
 	 * @see Route constructor
-	 * @param array of allowed methods
+	 * @param method array of allowed methods
 	 * @see Route constructor
-	 * @param the controller for this route
+	 * @param controller the controller for this route
 	 * @see Route constructor
 	 */
 	function when($route, array $method, Controller $controller){
@@ -37,7 +37,7 @@ class Router{
 	 * Alternative routing, if a route cannot be resolved.
 	 * If the alternative route cannot be resolved, an exception will be thrown.
 	 *
-	 * @param alternative route
+	 * @param route alternative route
 	 */
 	function otherwise($route){
 		$this->redirect = $route;

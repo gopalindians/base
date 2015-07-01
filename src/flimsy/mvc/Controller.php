@@ -5,7 +5,7 @@ abstract class Controller{
 	/**
 	 * Constructor.
 	 *
-	 * @param view The View related to this controller.
+	 * @param view the View related to this controller.
 	 */
 	function __construct($view = null){
 		$this->view = $view;

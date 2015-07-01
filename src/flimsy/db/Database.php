@@ -1,7 +1,7 @@
 <?php
 interface Database{
 	/**
- 	 * @param SQL query
+ 	 * @param query SQL query
  	 * @return result object
 	 */
     function query($query);
@@ -9,7 +9,7 @@ interface Database{
     /**
      * Specialized version of query.
      *
- 	 * @param SQL query
+ 	 * @param query SQL query
  	 * @return selected result object
 	 */
     function select($query);
@@ -17,7 +17,7 @@ interface Database{
     /**
      * Specialized version of query.
      *
-     * @param SQL query
+     * @param query SQL query
      * @return true if operation was successful, else false
      */
     function insert($query);
@@ -25,7 +25,7 @@ interface Database{
     /**
 	 * Specialized version of query.
 	 *
-     * @param SQL query
+     * @param query SQL query
      * @return true if operation was successful, else false
      */
     function delete($query);

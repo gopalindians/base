@@ -1,8 +1,10 @@
 <?php
 class MySQL implements Database{
 	const DEFAULT_CHARSET = 'ISO-8859-1';
+    const PREFIX_PATTERN = '{prefix}';
 
 	private $con = null;
+    private $prefix;
 
 	/**
 	 * Creates a new MySQL object and connects to database.
@@ -11,10 +13,12 @@ class MySQL implements Database{
 	 * @param user
 	 * @param password
 	 * @param database
-	 * @param disables autocommit, default is true
+     * @param prefix use {prefix} in your queries to replace them, default is ''
+	 * @param disableAutocommit disables autocommit, default is true
 	 */
-	function __construct($host, $user, $password, $database, $disableAutocommit = true){
+	function __construct($host, $user, $password, $database, $prefix = '', $disableAutocommit = true){
 		$this->con = @new mysqli($host, $user, $password);
+        $this->prefix = $prefix;
 
 		if($this->con->connect_error){
 			throw new DbConnectionException();
@@ -37,15 +41,15 @@ class MySQL implements Database{
 	}
 
 	/**
- 	 * @param, query
+ 	 * @param query
  	 * @return mysqli result object
 	 */
     function query($query){
-        return $this->con->query($query);
+        return $this->con->query(str_replace(MySQL::PREFIX_PATTERN, $this->prefix, $query));
     }
 
     /**
- 	 * @param query, pass substring starting at FROM
+ 	 * @param query pass substring starting at FROM
  	 * @return result entry objects per row as an array
      */
     function select($query){
@@ -65,7 +69,7 @@ class MySQL implements Database{
     }
 
     /**
- 	 * @param query, pass substring starting at INTO
+ 	 * @param query pass substring starting at INTO
  	 * @return true if the entry was inserted, else false
      */
     function insert($query){
@@ -73,7 +77,7 @@ class MySQL implements Database{
     }
 
     /**
-	 * @param query, pass substring starting at FROM
+	 * @param query pass substring starting at FROM
 	 * @return true if the entry was deleted, else false
      */
     function delete($query){
@@ -81,7 +85,7 @@ class MySQL implements Database{
     }
 
     /**
-	 * @param query, pass substring starting at table
+	 * @param query pass substring starting at table
 	 * @return true if the entry exists, else false
      */
     function exists($query){
