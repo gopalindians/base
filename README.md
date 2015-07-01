@@ -128,7 +128,7 @@ class MyController extends Controller{
 		Controller::__construct($view);
 	}
 
-	function exec(array $get){ // accept GET parameters passed by router
+	function exec(array $get, $method){ // accept GET parameters and HTTP method passed by router
 		// this is a nice way to delegate work:
 		if(isset($get['action'])){
 			$this->doSomethingComplex();

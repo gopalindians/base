@@ -4,7 +4,7 @@ class Error404Controller extends Controller{
         Controller::__construct();
     }
 
-    function exec(array $get){
+    function exec(array $get, $method){
         print '<h1>#404</h1>';
     }
 }

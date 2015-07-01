@@ -92,8 +92,7 @@ class Router{
 
 		foreach($this->routes AS $value){
 			if($value->matches($route) && in_array($_SERVER['REQUEST_METHOD'], $value->getRequestMethods())){
-				$value->getController()->exec($value->getParams());
-
+				$value->getController()->exec($value->getParams(), $_SERVER['REQUEST_METHOD']);
 				return;
 			}
 		}

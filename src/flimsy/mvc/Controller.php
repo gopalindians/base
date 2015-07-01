@@ -14,9 +14,11 @@ abstract class Controller{
 	/**
 	 * Execute function, will be executed by Router.
 	 *
+	 * @param get contains the GET parameters
+	 * @param method the used method to access the route
 	 * @return void
 	 */
-	abstract function exec(array $get);
+	abstract function exec(array $get, $method);
 
 	/**
 	 * Resets the controller and _all_ environment variables.
