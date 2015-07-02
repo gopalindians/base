@@ -79,8 +79,7 @@ class Router{
 	private function resolveWithoutRedirect($url = null){
 		try{
 			if(!$url){
-				$route = @parse_url($_SERVER['REQUEST_URI'])['path'];
-				$route = preg_replace('~/?'.$this->basePath.'~i', '', $route);
+				$route = preg_replace('~/?'.$this->basePath.'~i', '', $_SERVER['REQUEST_URI']);
 			}
 			else{
 				$route = $url;

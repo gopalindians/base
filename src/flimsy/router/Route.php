@@ -22,7 +22,7 @@ class Route{
  	 * @param controller controller for this route
 	 */
 	function __construct($route, array $requestMethods, Controller $controller){
-		$routeParse = $this->resolveRoute($route);
+		$routeParse = $this->resolveRoute($route, true);
 
 		$this->route = $routeParse[0];
 		$this->routeParams = $routeParse[1];
@@ -30,7 +30,7 @@ class Route{
 		$this->controller = $controller;
 	}
 
-	private function resolveRoute($route){
+	private function resolveRoute($route, $setOptionalParams = false){
 		$route = rtrim($route, '/');
 		$routeEnd = strpos($route, Route::PARAM_DELIMITER);
 
@@ -38,23 +38,26 @@ class Route{
 			return array($route, array());
 		}
 
-		$params = explode(Route::PARAM_DELIMITER, substr($route, $routeEnd, strlen($route)));
+		$get = explode(Route::PARAM_DELIMITER, substr($route, $routeEnd, strlen($route)));
 
-		foreach($params AS $key => $value){
+		foreach($get AS $key => $value){
 			// remove empty
 			if(empty($value)){
-				unset($params[$key]);
+				unset($get[$key]);
 				continue;
 			}
 
 			// test optional
 			if(substr($value, -1) == Route::PARAM_OPTIONAL){
-				$this->optionalParams++;
-				$params[$key] = substr($value, 0, -1);
+				if($setOptionalParams){
+					$this->optionalParams++;
+				}
+
+				$get[$key] = substr($value, 0, -1);
 			}
 		}
 
-		return array(substr($route, 0, $routeEnd), $params);
+		return array(substr($route, 0, $routeEnd), $get);
 	}
 
 	/**
