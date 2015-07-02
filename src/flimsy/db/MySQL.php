@@ -77,6 +77,14 @@ class MySQL implements Database{
     }
 
     /**
+     * @param query pass substring starting at UPDATE
+     * @return true if the entry was updated, else false
+     */
+    function update($query){
+        return $this->query('UPDATE '.$query);
+    }
+
+    /**
      * @param query pass substring starting at FROM
      * @return true if the entry was deleted, else false
      */
