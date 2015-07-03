@@ -8,6 +8,9 @@ function web_exp_autoload($class){
 	else if(file_exists($file = 'view/'.$class.'.php')){
 		require_once $file;
 	}
+	else if(file_exists($file = 'model/'.$class.'.php')){
+		require_once $file;
+	}
 }
 
 spl_autoload_register('web_exp_autoload');

@@ -1,9 +1,5 @@
 <?php
 class AboutView extends View{
-    function __construct(){
-        
-    }
-
     function display(){
     	print '<!DOCTYPE html><html><head><base href="/flimsy/src/test/" /><link rel="stylesheet" type="text/css" href="view/layout.css" /></head><body>';
         print '<h1>About</h1>';

@@ -9,6 +9,9 @@ function exception($e){
 	exit;
 }
 
+// setup database connection
+$db = new MySQL('localhost', 'root', '', 'flimsy');
+
 // setup router
 $router = new Router('flimsy/src/test');
 
@@ -25,7 +28,7 @@ $router->when('/form',
 			  new FormController());
 
 $router->when('/404',
-			  array('GET'),
+			  array('GET', 'POST'),
 			  new Error404Controller());
 
 $router->otherwise('/404');
