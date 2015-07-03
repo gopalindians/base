@@ -1,20 +1,20 @@
 <?php
-class Test extends Model{
-	const NAME = 'Test';
+class TestModel extends Model{
+	const NAME = 'TestModel';
 
 	public $a;
 	public $b;
 
 	function __construct(){
-		Model::__construct(Test::NAME);
+		Model::__construct(TestModel::NAME);
 	}
 
 	static function jsonDeserialize($json){
-		if(!Model::checkJsonObject($json, Test::NAME)){
+		if(!Model::checkJsonObject($json, TestModel::NAME)){
 			return null;
 		}
 
-		$obj = new Test();
+		$obj = new TestModel();
 		Model::set($obj, 'a', $json);
 		Model::set($obj, 'b', $json);
 

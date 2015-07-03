@@ -4,7 +4,13 @@ class HomeView extends View{
     private $nr = null;
 
     function display(){
-        print '<!DOCTYPE html><html><head><base href="/flimsy/src/test/" /><link rel="stylesheet" type="text/css" href="view/layout.css" /><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script></head><body>';
+        print '<!DOCTYPE html><html><head><base href="/flimsy/src/test/" />';
+        print '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>';
+        print '<script src="../flimsy/js/util/namespace.js"></script>';
+        print '<script src="../flimsy/js/util/extend.js"></script>';
+        print '<script src="../flimsy/js/mvc/Model.js"></script>';
+        print '<link rel="stylesheet" type="text/css" href="view/layout.css" />';
+        print '</head><body>';
         print '<h1>Home</h1>';
         print '<a href="./">Home</a> <a href="about">About</a><br /><br />';
         

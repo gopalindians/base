@@ -13,10 +13,10 @@ class HomeController extends Controller{
     		$this->view->setNr($get['nr']);
     	}
 
-        $test = Test::jsonDeserialize(json_decode('{"class":"Test", "data":{"a":321, "b":123}}'));
+        /*$test = TestModel::jsonDeserialize(json_decode('{"class":"TestModel", "data":{"a":321, "b":123}}'));
         var_dump($test);
         print '<br>';
-        var_dump($test->jsonSerialize());
+        var_dump($test->jsonSerialize());*/
 
         $this->view->display();
     }
