@@ -6,7 +6,8 @@
  * @return void
  */
 function flimsy_autoload($class){
-	$class = end(explode('\\', $class));
+	$class = explode('\\', $class);
+	$class = end($class);
 	$path = constant('FLIMSY_ROOT').'/';
 	$file = '';
 
@@ -23,3 +24,4 @@ function flimsy_autoload($class){
 
 spl_autoload_register('flimsy\flimsy_autoload');
 ?>
+
