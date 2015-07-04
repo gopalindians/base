@@ -166,24 +166,113 @@ class MyView extends View{
 
 ### Model
 
-A model is used to map a front end object (JavaScript) to a backend object (PHP), which makes it easier to store data and manipulate your page.
-
-#### Server
-
-*WIP*
-
-#### Client
-
-First of all, you should set jQuery ajax to async, so that you page does not freeze on posts.
-Put these lines before executing any flimsy code:
+A model is used to map a front end object (JavaScript) to a backend object (PHP and database), which makes it easier to store data and manipulate your page.
+The communication is established using POST Ajax request, provided by jQuery. To enable asynchronous post requests, you need to activate this in jQuery:
 
 ```
 $.ajaxSetup({
 	async:true
 });
+``` 
+
+#### Server
+
+Server sides, overload the *Model* class to create a new entity. You have to override a few methods to send and receive an object to/from the frontend:
+
+```
+class TestModel extends Model{
+	const NAME = 'TestModel';
+
+	public $a; // some members
+	public $b;
+
+	function __construct(){
+		Model::__construct(TestModel::NAME); // pass the identification name to parent class
+	}
+
+	static function jsonDeserialize($post){
+		// here we check and get an object from the POST request
+		if(($data = Model::checkJsonObject($post, TestModel::NAME)) == null){
+			return null;
+		}
+
+		// if it maps to this class, create a new instance, set data and return it
+		$obj = new TestModel();
+		Model::set($obj, 'a', $data); // use this static method to set members,
+		Model::set($obj, 'b', $data); // it will check the member for existance
+
+		return $obj;
+	}
+
+	// this is used to send this object to the frontend
+	function jsonSerialize(){
+		return $this->jsonSerializeToSchema(array('a' => $this->a,
+					 							  'b' => $this->b));
+	}
+}
 ```
 
-*WIP*
+Now that we have our entities backend representation, we can use it to receive and send an object to the frontend on request. In a controller you can do the following (if it accepts POST requests):
+
+```
+$test = TestModel::jsonDeserialize($_POST); // receive the entity
+
+if($test){ // if it maps to "TestModel", use it and send the result
+    $test->a = 123;
+    $test->b = 456;
+    print $test->jsonSerialize();
+}
+else{
+	// send an error or expected entity
+}
+```
+
+Notice, *jsonSerialize()* does not print to the output, it returns a string containing the serialized object. This can be useful to chain multiple objects by concatenation. If you just want to send a single object, you can directly print it.
+
+#### Client
+
+As for the backend, we create a client side entity by extending the *Model* base class, but this time the JavaScript version:
+
+```
+var TestModel = function(){
+	flimsy.mvc.Model.call(this, 'TestModel'); // pass the identification to the base class
+
+	this.a = 987; // some members
+	this.b = 654;
+};
+
+flimsy.util.js.extend(flimsy.mvc.Model, TestModel); // extend it by calling this function
+
+TestModel.prototype.receive = function(data){ // will be called, if an received object maps to this class
+	this.a = data.a;
+	this.b = data.b;
+};
+
+TestModel.prototype.getData = function(){ // equivalent to jsonSerialize()
+	return {a:this.a, b:this.b};
+};
+```
+
+And use it:
+
+```
+$(document).ready(function(){
+	// create a new entity
+	var test = new TestModel();
+	
+	// check output before
+	console.log(test.a); // will print "987"
+	console.log(test.b); // "654"
+
+	// check output after by using the (optioal) callback function
+	var callback = function(data){
+		console.log(test.a+"|"+test.b); // will print "123|456"
+	}
+
+	// send it to ./ (URL) and asynchroniously receive result in callback
+	test.send("./", callback);
+});
+```
 
 ### Database
 
@@ -203,6 +292,10 @@ $db->exists('...'); // adds EXISTS SELECT(SELECT 1 FROM in front of query, you n
 $db->commit(); // commit your changes (INSERTs mostly)
 $db->rollback(); // if called before commit(), all changes will be rolled back
 ```
+
+## Contribute
+
+In order to contribute, please create a pull request and/or use the issue tracker on GitHub.
 
 ## License
 

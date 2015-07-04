@@ -32,7 +32,18 @@ flimsy.mvc.Model.prototype.send = function(url, callback){
 
 	this._callback = callback;
 
-	$.post(url, {class:this._classname, data:this}, this._receive);
+	var self = this;
+	var res = function(data){
+		self._receive(data);
+	}
+
+	// create object and send
+	var name = this._classname;
+	var data = JSON.stringify(this.getData());
+	var obj = {};
+	obj[name] = data;
+
+	$.post(url, obj, res);
 };
 
 /**
@@ -47,13 +58,22 @@ flimsy.mvc.Model.prototype.receive = function(data){
 };
 
 /**
+ * Used to send this objects data as string (JSON.stringify()).
+ * You need to override this and return an object containg the data you want to send!
+ *
+ * @return void
+ */
+flimsy.mvc.Model.prototype.getData = function(){
+	// override!
+	return {};
+};
+
+/**
  * Private!
  */
-flimsy.mvc.Model.prototype._receive = function(result){
-	console.log('mäh');
-
+flimsy.mvc.Model.prototype._receive = function(data){
 	try{
-		var obj = JSON.parse(result);
+		var obj = JSON.parse(data);
 
 		// check classname
 		if(obj.class != this._classname){

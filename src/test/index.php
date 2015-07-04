@@ -16,7 +16,7 @@ $db = new MySQL('localhost', 'root', '', 'flimsy');
 $router = new Router('flimsy/src/test');
 
 $router->when('/:welcome?/:nr?',
-			  array('GET'),
+			  array('GET', 'POST'),
 			  new HomeController(new HomeView()));
 
 $router->when('/about/',
@@ -40,9 +40,6 @@ catch(RouterPathException $e){
 	exception($e);
 }
 catch(RouteUnresolvedException $e){
-	exception($e);
-}
-catch(RouteUnacceptedRequestException $e){
 	exception($e);
 }
 ?>

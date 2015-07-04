@@ -9,14 +9,14 @@ class TestModel extends Model{
 		Model::__construct(TestModel::NAME);
 	}
 
-	static function jsonDeserialize($json){
-		if(!Model::checkJsonObject($json, TestModel::NAME)){
+	static function jsonDeserialize($post){
+		if(($data = Model::checkJsonObject($post, TestModel::NAME)) == null){
 			return null;
 		}
 
 		$obj = new TestModel();
-		Model::set($obj, 'a', $json);
-		Model::set($obj, 'b', $json);
+		Model::set($obj, 'a', $data);
+		Model::set($obj, 'b', $data);
 
 		return $obj;
 	}

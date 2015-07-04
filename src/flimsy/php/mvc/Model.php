@@ -13,27 +13,38 @@ abstract class Model{
 	}
 
 	/**
-	 * Tries to map the passed json object to this class and returns a new instance.
-	 * The json must be build in the schema:
+	 * Tries to map the passed $_POST to this class and returns a new instance.
+	 * The array must be build in the schema:
 	 *
-	 * {class:"Classname", data:{DATA}}
+	 * "Classname" => "JsonAsString"
 	 *
-	 * "class" is required to identify the object, "data" is the use data.
+	 * "Classname" is required to identify the object, "JsonAsString" is the use data.
 	 *
-	 * @param json a json object (not a string! use json_decode())
+	 * @param post the post data
 	 * @return a new instance of this class, or null if not possible
 	 */
-	static abstract function jsonDeserialize($json);
+	static abstract function jsonDeserialize($post);
 
 	/**
-	 * Tests if the object passed to jsonDeserialize() maps to this object.
+	 * Tests if the post data passed to jsonDeserialize() maps to this object.
 	 *
-	 * @param json a json object (not a string! use json_decode())
+	 * @param post the post data
 	 * @param classname the classname of this class
-	 * @return true, if the json objects maps to this object by its "class" member, false otherwise
+	 * @return the json objects if it maps, null otherwise
 	 */
-	static protected function checkJsonObject($json, $classname){
-		return is_object($json) && isset($json->class) && isset($json->data) && $classname == $json->class;
+	static protected function checkJsonObject($post, $classname){
+		if(!isset($post[$classname])){
+			return null;
+		}
+
+		try{
+			$obj = json_decode($post[$classname]);
+		}
+		catch(Exception $e){
+			$obj = null;
+		}
+
+		return $obj;
 	}
 
 	/**
@@ -45,8 +56,8 @@ abstract class Model{
 	 * @return void
 	 */
 	static function set($obj, $var, $json){
-		if(property_exists($obj, $var) && property_exists($json->data, $var)){
-			$obj->$var = $json->data->$var;
+		if(property_exists($obj, $var) && property_exists($json, $var)){
+			$obj->$var = $json->$var;
 		}
 	}
 

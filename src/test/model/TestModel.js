@@ -11,3 +11,7 @@ TestModel.prototype.receive = function(data){
 	this.a = data.a;
 	this.b = data.b;
 };
+
+TestModel.prototype.getData = function(){
+	return {a:this.a, b:this.b};
+};

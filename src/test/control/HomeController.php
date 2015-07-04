@@ -5,20 +5,26 @@ class HomeController extends Controller{
     }
 
     function exec(array $get, $method){
-    	if(isset($get['welcome'])){
-    		$this->view->setWelcome($get['welcome']);
-    	}
+        if($method == 'GET'){
+        	if(isset($get['welcome'])){
+        		$this->view->setWelcome($get['welcome']);
+        	}
 
-    	if(isset($get['nr'])){
-    		$this->view->setNr($get['nr']);
-    	}
+        	if(isset($get['nr'])){
+        		$this->view->setNr($get['nr']);
+        	}
 
-        /*$test = TestModel::jsonDeserialize(json_decode('{"class":"TestModel", "data":{"a":321, "b":123}}'));
-        var_dump($test);
-        print '<br>';
-        var_dump($test->jsonSerialize());*/
-
-        $this->view->display();
+            $this->view->display();
+        }
+        else{
+            $test = TestModel::jsonDeserialize($_POST);
+            
+            if($test){
+                $test->a = 123;
+                $test->b = 456;
+                print $test->jsonSerialize();
+            }
+        }
     }
 }
 ?>
