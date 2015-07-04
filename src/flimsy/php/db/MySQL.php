@@ -1,4 +1,4 @@
-<?php
+<?php namespace flimsy;
 class MySQL implements Database{
     const DEFAULT_CHARSET = 'ISO-8859-1';
     const PREFIX_PATTERN = '{prefix}';
@@ -17,7 +17,7 @@ class MySQL implements Database{
      * @param disableAutocommit disables autocommit, default is true
      */
     function __construct($host, $user, $password, $database, $prefix = '', $disableAutocommit = true){
-        $this->con = @new mysqli($host, $user, $password);
+        $this->con = @new \mysqli($host, $user, $password);
         $this->prefix = $prefix;
 
         if($this->con->connect_error){

@@ -1,4 +1,4 @@
-<?php
+<?php namespace flimsy;
 abstract class Controller{
 	protected $view = null;
 

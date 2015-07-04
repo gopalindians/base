@@ -10,10 +10,10 @@ function exception($e){
 }
 
 // setup database connection
-$db = new MySQL('localhost', 'root', '', 'flimsy');
+$db = new flimsy\MySQL('localhost', 'root', '', 'flimsy');
 
 // setup router
-$router = new Router('flimsy/src/test');
+$router = new flimsy\Router('flimsy/src/test');
 
 $router->when('/:welcome?/:nr?',
 			  array('GET', 'POST'),
@@ -36,10 +36,10 @@ $router->otherwise('/404');
 try{
 	$router->resolve();
 }
-catch(RouterPathException $e){
+catch(flimsy\RouterPathException $e){
 	exception($e);
 }
-catch(RouteUnresolvedException $e){
+catch(flimsy\RouteUnresolvedException $e){
 	exception($e);
 }
 ?>

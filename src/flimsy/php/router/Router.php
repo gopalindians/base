@@ -1,4 +1,4 @@
-<?php
+<?php namespace flimsy;
 class Router{
 	private $routes = array();
 	private $basePath = '';
@@ -115,7 +115,7 @@ class Router{
 	}
 }
 
-class RoutePathException extends Exception{
+class RoutePathException extends \Exception{
 	const MESSAGE = 'Could not parse URL, resolving route is not possible.';
 	const CODE = 1;
 
@@ -124,7 +124,7 @@ class RoutePathException extends Exception{
 	}
 }
 
-class RouteUnresolvedException extends Exception{
+class RouteUnresolvedException extends \Exception{
 	const MESSAGE = 'The URL could not be resolved to a route: ';
 	const CODE = 2;
 

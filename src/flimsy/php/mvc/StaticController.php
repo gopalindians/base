@@ -1,4 +1,4 @@
-<?php
+<?php namespace flimsy;
 /**
  * Basic controller that just displays a view.
  */

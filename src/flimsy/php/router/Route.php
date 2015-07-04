@@ -1,4 +1,4 @@
-<?php
+<?php namespace flimsy;
 class Route{
 	const PARAM_DELIMITER = '/:';
 	const PARAM_OPTIONAL = '?';

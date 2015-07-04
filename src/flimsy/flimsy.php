@@ -1,4 +1,4 @@
-<?php
+<?php namespace flimsy;
 /**
  * Includes required flimsy classes, will be registered as an autoload function in this file.
  * You must set FLIMSY_ROOT constant in order to make this work!
@@ -6,6 +6,7 @@
  * @return void
  */
 function flimsy_autoload($class){
+	$class = end(explode('\\', $class));
 	$path = constant('FLIMSY_ROOT').'/';
 	$file = '';
 
@@ -20,5 +21,5 @@ function flimsy_autoload($class){
 	}
 }
 
-spl_autoload_register('flimsy_autoload');
+spl_autoload_register('flimsy\flimsy_autoload');
 ?>

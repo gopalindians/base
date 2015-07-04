@@ -1,4 +1,4 @@
-<?php
+<?php namespace flimsy;
 interface Database{
     /**
      * @param query SQL query
@@ -37,7 +37,7 @@ interface Database{
     function delete($query);
 }
 
-class DbConnectionException extends Exception{
+class DbConnectionException extends \Exception{
     const MESSAGE = 'Could not connect to database!';
     const CODE = 4;
 
@@ -46,7 +46,7 @@ class DbConnectionException extends Exception{
     }
 }
 
-class DbSelectException extends Exception{
+class DbSelectException extends \Exception{
     const MESSAGE = 'Could not select database!';
     const CODE = 5;
 

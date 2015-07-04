@@ -1,7 +1,7 @@
 <?php
-class Error404Controller extends Controller{
+class Error404Controller extends flimsy\Controller{
     function __construct(){
-        Controller::__construct();
+        flimsy\Controller::__construct();
     }
 
     function exec(array $get, $method){

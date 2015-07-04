@@ -32,7 +32,7 @@ require_once 'path/to/flimsy/flimsy.php'; // this will include all required clas
 To setup a new router for your website, create a new Router object and add paths:
 
 ```PHP
-$router = new Router('base_path'); // base_path is optional
+$router = new flimsy\Router('base_path'); // base_path is optional
 
 // Option 1: simple path resolver
 $router->when('/', // start page (index)
@@ -77,10 +77,10 @@ Catch them like so:
 try{
 	$router->resolve();
 }
-catch(RouterPathException $e){
+catch(flimsy\RouterPathException $e){
 	// handle...
 }
-catch(RouteUnresolvedException $e){
+catch(flimsy\RouteUnresolvedException $e){
 	// handle...
 }
 ```
@@ -131,9 +131,9 @@ Since we use a RESTful URL, relative file paths cannot be resolved correctly. To
 To write a controller you need to extend the *Controller* class:
 
 ```PHP
-class MyController extends Controller{
+class MyController extends flimsy\Controller{
 	function __construct($view){ // this controller WILL use a view
-		Controller::__construct($view);
+		flimsy\Controller::__construct($view);
 	}
 
 	function exec(array $get, $method){ // accept GET parameters and HTTP method passed by router
@@ -157,7 +157,7 @@ class MyController extends Controller{
 A view is used to display your page. As for a controller, you have to extend the *View* base class:
 
 ```PHP
-class MyView extends View{
+class MyView extends flimsy\View{
 	function display(){
 		// use smarty or whatever to display your page
 	}
@@ -180,26 +180,26 @@ $.ajaxSetup({
 Server sides, overload the *Model* class to create a new entity. You have to override a few methods to send and receive an object to/from the frontend:
 
 ```
-class TestModel extends Model{
+class TestModel extends flimsy\Model{
 	const NAME = 'TestModel';
 
 	public $a; // some members
 	public $b;
 
 	function __construct(){
-		Model::__construct(TestModel::NAME); // pass the identification name to parent class
+		flimsy\Model::__construct(TestModel::NAME); // pass the identification name to parent class
 	}
 
 	static function jsonDeserialize($post){
 		// here we check and get an object from the POST request
-		if(($data = Model::checkJsonObject($post, TestModel::NAME)) == null){
+		if(($data = flimsy\Model::checkJsonObject($post, TestModel::NAME)) == null){
 			return null;
 		}
 
 		// if it maps to this class, create a new instance, set data and return it
 		$obj = new TestModel();
-		Model::set($obj, 'a', $data); // use this static method to set members,
-		Model::set($obj, 'b', $data); // it will check the member for existance
+		flimsy\Model::set($obj, 'a', $data); // use this static method to set members,
+		flimsy\Model::set($obj, 'b', $data); // it will check the member for existance
 
 		return $obj;
 	}
@@ -282,7 +282,7 @@ flimsy provides MySQL database access and an simple interface for other database
 Example for simple queries:
 
 ```PHP
-$db = new MySQL('host', 'user', 'password', 'database');
+$db = new flimsy\MySQL('host', 'user', 'password', 'database');
 
 $db->query('CREATE TABLE ...'); // simply calls query of mysqli and returns result (mixed)
 $db->select('FROM ...'); // adds SELECT in front of query and returns results AS AN ARRAY OF OBJECTS, which covers most (if not all) uses of an SELECT
