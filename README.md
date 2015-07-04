@@ -1,6 +1,14 @@
 # flimsy
 
-A lightweight PHP/JS router and MVC framework.
+A lightweight PHP/JS router and MVC framework, build for hand written simple and complex web applications.
+
+## Requirements
+
+* PHP (latest version recommended)
+* .htaccess support (RewriteEngine and FollowSymLinks)
+* JS
+* jQuery (include before flimsy JS files!)
+* MySQL (optional)
 
 ## Setup
 
@@ -158,7 +166,22 @@ class MyView extends View{
 
 ### Model
 
-A model is used to map a front end Object (JavaScript) to a backend Object (PHP), which makes it easier to store data and manipulate your page.
+A model is used to map a front end object (JavaScript) to a backend object (PHP), which makes it easier to store data and manipulate your page.
+
+#### Server
+
+*WIP*
+
+#### Client
+
+First of all, you should set jQuery ajax to async, so that you page does not freeze on posts.
+Put these lines before executing any flimsy code:
+
+```
+$.ajaxSetup({
+	async:true
+});
+```
 
 *WIP*
 
@@ -180,3 +203,7 @@ $db->exists('...'); // adds EXISTS SELECT(SELECT 1 FROM in front of query, you n
 $db->commit(); // commit your changes (INSERTs mostly)
 $db->rollback(); // if called before commit(), all changes will be rolled back
 ```
+
+## License
+
+MIT

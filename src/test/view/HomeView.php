@@ -9,6 +9,8 @@ class HomeView extends View{
         print '<script src="../flimsy/js/util/namespace.js"></script>';
         print '<script src="../flimsy/js/util/extend.js"></script>';
         print '<script src="../flimsy/js/mvc/Model.js"></script>';
+        print '<script src="model/TestModel.js"></script>';
+        print '<script src="control/ComController.js"></script>';
         print '<link rel="stylesheet" type="text/css" href="view/layout.css" />';
         print '</head><body>';
         print '<h1>Home</h1>';
