@@ -71,7 +71,7 @@ class Router{
 		try{
 			$this->resolveWithoutRedirect();
 		}
-		catch(Exception $e){
+		catch(\Exception $e){
 			$this->resolveWithoutRedirect($this->redirect);
 		}
 	}
@@ -85,7 +85,7 @@ class Router{
 				$route = $url;
 			}
 		}
-		catch(Exception $e){
+		catch(\Exception $e){
 			throw new RoutePathException();
 		}
 
@@ -120,7 +120,7 @@ class RoutePathException extends \Exception{
 	const CODE = 1;
 
 	function __construct(){
-		Exception::__construct(RouterPathException::MESSAGE, RoutePathException::CODE);
+		\Exception::__construct(RouterPathException::MESSAGE, RoutePathException::CODE);
 	}
 }
 
@@ -129,7 +129,8 @@ class RouteUnresolvedException extends \Exception{
 	const CODE = 2;
 
 	function __construct($url = ''){
-		Exception::__construct(RouteUnresolvedException::MESSAGE.$url, RouteUnresolvedException::CODE);
+		\Exception::__construct(RouteUnresolvedException::MESSAGE.$url, RouteUnresolvedException::CODE);
 	}
 }
 ?>
+
