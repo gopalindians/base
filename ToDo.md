@@ -4,3 +4,5 @@
 * add namespace for flimsy
 * make use of XMLHttpRequest instead of jQuery?
 * more testing
+* add debugging
+

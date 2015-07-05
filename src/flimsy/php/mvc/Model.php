@@ -23,7 +23,9 @@ abstract class Model{
 	 * @param post the post data
 	 * @return a new instance of this class, or null if not possible
 	 */
-	static abstract function jsonDeserialize($post);
+	static function jsonDeserialize($post){
+		// overload!
+	}
 
 	/**
 	 * Tests if the post data passed to jsonDeserialize() maps to this object.
@@ -80,3 +82,4 @@ abstract class Model{
 	}
 }
 ?>
+
