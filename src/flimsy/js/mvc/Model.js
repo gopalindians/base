@@ -54,7 +54,7 @@ flimsy.mvc.Model.prototype.send = function(url, callback){
  * @return void
  */
 flimsy.mvc.Model.prototype.receive = function(data){
-	// override!
+	throw new flimsy.mvc.MethodNotImplementedException("Model", "receive");
 };
 
 /**
@@ -64,13 +64,9 @@ flimsy.mvc.Model.prototype.receive = function(data){
  * @return void
  */
 flimsy.mvc.Model.prototype.getData = function(){
-	// override!
-	return {};
+	throw new flimsy.mvc.MethodNotImplementedException("Model", "getData");
 };
 
-/**
- * Private!
- */
 flimsy.mvc.Model.prototype._receive = function(data){
 	try{
 		var obj = JSON.parse(data);
@@ -81,7 +77,7 @@ flimsy.mvc.Model.prototype._receive = function(data){
 		}
 	}
 	catch(e){
-		return;
+		throw new flimsy.mvc.DataNoJsonException(data);
 	}
 
 	this.receive(obj.data);
@@ -90,3 +86,29 @@ flimsy.mvc.Model.prototype._receive = function(data){
 		this._callback(obj.data);
 	}
 };
+
+/**
+ * Constructor.
+ * This exception is used in flimsy.mvc.Model.
+ *
+ * @param data the data which failed parsing to json.
+ */
+flimsy.mvc.DataNoJsonException = function(data){
+	this.name = "DataNoJsonException";
+	this.message = "The data could not be parsed to an JSON object! Data was: "+data;
+};
+
+flimsy.util.js.extend(Error, flimsy.mvc.DataNoJsonException);
+
+/**
+ * Constructor.
+ * This exception is used in flimsy.mvc.Model.
+ *
+ * @param data the data which failed parsing to json.
+ */
+flimsy.mvc.DataNoJsonException = function(data){
+	this.name = "DataNoJsonException";
+	this.message = "The data could not be parsed to an JSON object! Data was: "+data;
+};
+
+flimsy.util.js.extend(Error, flimsy.mvc.DataNoJsonException);

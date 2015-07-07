@@ -8,6 +8,7 @@ class HomeView extends flimsy\View{
         print '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>';
         print '<script src="../flimsy/js/util/namespace.js"></script>';
         print '<script src="../flimsy/js/util/extend.js"></script>';
+        print '<script src="../flimsy/js/mvc/MethodNotImplementedException.js"></script>';
         print '<script src="../flimsy/js/mvc/Model.js"></script>';
         print '<script src="model/TestModel.js"></script>';
         print '<script src="control/HomeController.js"></script>';

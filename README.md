@@ -14,7 +14,7 @@ A lightweight PHP/JS router and MVC framework, build for hand written simple and
 
 1. Download the latest flimsy version.
 2. Copy the flimsy directory to any location into your project you like.
-3. Copy the .htaccess file into your projects root directory.
+3. Copy the .htaccess file into your projects root directory (and remove the underscore).
 4. Setup flimsy in your index.php.
 5. And you're ready to use flimsy!
 
@@ -205,9 +205,8 @@ class TestModel extends flimsy\Model{
 	}
 
 	// this is used to send this object to the frontend
-	function jsonSerialize(){
-		return $this->jsonSerializeToSchema(array('a' => $this->a,
-					 							  'b' => $this->b));
+	function getData(){
+		return array('a' => $this->a, 'b' => $this->b));
 	}
 }
 ```

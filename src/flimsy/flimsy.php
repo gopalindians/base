@@ -1,4 +1,6 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
 /**
  * Includes required flimsy classes, will be registered as an autoload function in this file.
  * You must set FLIMSY_ROOT constant in order to make this work!

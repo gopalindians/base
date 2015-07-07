@@ -1,6 +1,11 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
+
 /**
- * Basic controller that just displays a view.
+ * Basic controller that displays a single view.
+ *
+ * @author Marvin Blum
  */
 class StaticController extends Controller{
 	function __construct($view){

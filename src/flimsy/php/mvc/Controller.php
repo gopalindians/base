@@ -1,4 +1,12 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
+
+/**
+ * MVC controller class. Controls your application server side.
+ *
+ * @author Marvin Blum
+ */
 abstract class Controller{
 	protected $view = null;
 

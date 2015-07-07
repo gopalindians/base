@@ -1,4 +1,12 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
+
+/**
+ * Class for server side routing.
+ *
+ * @author Marvin Blum
+ */
 class Router{
 	private $routes = array();
 	private $basePath = '';

@@ -1,4 +1,12 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
+
+/**
+ * Database interface.
+ *
+ * @author Marvin Blum
+ */
 interface Database{
     /**
      * @param query SQL query

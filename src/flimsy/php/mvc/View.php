@@ -1,4 +1,12 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
+
+/**
+ * MVC view class. Used to display a page.
+ *
+ * @author Marvin Blum
+ */
 abstract class View{
     /**
      * Abstract method used to render current view.

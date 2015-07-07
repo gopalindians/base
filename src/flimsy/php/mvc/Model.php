@@ -1,4 +1,14 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
+
+/**
+ * Model class, representing an entity on server side and database.
+ * Supposed to be used together with Model.js.
+ *
+ * @author Marvin Blum
+ * @see Model.js
+ */
 abstract class Model{
 	protected $classname;
 
@@ -11,6 +21,24 @@ abstract class Model{
 	function __construct($classname = 'Model'){
 		$this->classname = $classname;
 	}
+
+	/**
+	 * Serializes this object to schema and adds data from getData().
+	 * Returns a serialized json object of this class.
+	 *
+	 * @return a serialized json object (string) of this class
+	 */
+	function jsonSerialize(){
+		return '{"class":"'.$this->classname.'","data":'.json_encode($this->getData()).'}';
+	}
+
+	/**
+	 * Returns a json encodable object with relevant data of this class.
+	 * An array is a suitable to return.
+	 *
+	 * @return a json encodable object
+	 */
+	abstract function getData();
 
 	/**
 	 * Tries to map the passed $_POST to this class and returns a new instance.
@@ -62,24 +90,5 @@ abstract class Model{
 			$obj->$var = $json->$var;
 		}
 	}
-
-	/**
-	 * Returns a serialized json object of this class.
-	 *
-	 * @return a serialized json object (string) of this class
-	 */
-	abstract function jsonSerialize();
-
-	/**
-	 * Serializes this object to schema and adds passed data.
-	 * Should be used in jsonSerialize() to simplify communication to JavaScript.
-	 *
-	 * @param data will be added to the json object using json_encode()
-	 * @return the json object
-	 */
-	protected function jsonSerializeToSchema($data){
-		return '{"class":"'.$this->classname.'","data":'.json_encode($data).'}';
-	}
 }
 ?>
-

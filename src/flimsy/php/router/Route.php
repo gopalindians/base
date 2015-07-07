@@ -1,4 +1,12 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
+
+/**
+ * Class to define a route on your page. Used in Router.
+ *
+ * @author Marvin Blum
+ */
 class Route{
 	const PARAM_DELIMITER = '/:';
 	const PARAM_OPTIONAL = '?';

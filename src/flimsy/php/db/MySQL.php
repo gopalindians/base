@@ -1,4 +1,12 @@
-<?php namespace flimsy;
+<?php
+
+namespace flimsy;
+
+/**
+ * MySQL class. Handles connection and query to a MySQL database.
+ *
+ * @author Marvin Blum
+ */
 class MySQL implements Database{
     const DEFAULT_CHARSET = 'ISO-8859-1';
     const PREFIX_PATTERN = '{prefix}';

@@ -21,9 +21,8 @@ class TestModel extends flimsy\Model{
 		return $obj;
 	}
 
-	function jsonSerialize(){
-		return $this->jsonSerializeToSchema(array('a' => $this->a,
-					 							  'b' => $this->b));
+	function getData(){
+		return array('a' => $this->a, 'b' => $this->b);
 	}
 }
 ?>
