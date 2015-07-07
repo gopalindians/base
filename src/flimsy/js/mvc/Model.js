@@ -35,7 +35,7 @@ flimsy.mvc.Model.prototype.send = function(url, callback){
 	var self = this;
 	var res = function(data){
 		self._receive(data);
-	}
+	};
 
 	// create object and send
 	var name = this._classname;

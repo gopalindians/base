@@ -19,7 +19,7 @@ $router->when('/:welcome?/:nr?',
 			  array('GET', 'POST'),
 			  new HomeController(new HomeView()));
 
-$router->when('/about/',
+$router->when('/about',
 			  array('GET'),
 			  new AboutController(new AboutView()));
 
