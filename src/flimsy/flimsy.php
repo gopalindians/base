@@ -7,7 +7,7 @@ namespace flimsy;
  *
  * @return void
  */
-function flimsy_autoload($class){
+function autoload($class){
 	$class = explode('\\', $class);
 	$class = end($class);
 	$path = constant('FLIMSY_ROOT').'/';
@@ -24,6 +24,6 @@ function flimsy_autoload($class){
 	}
 }
 
-spl_autoload_register('flimsy\flimsy_autoload');
+spl_autoload_register('flimsy\autoload');
 ?>
 
