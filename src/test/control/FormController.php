@@ -1,7 +1,7 @@
 <?php
 class FormController extends base\Controller{
-    function __construct(){
-        base\Controller::__construct();
+    function __construct(array $params = array()){
+        base\Controller::__construct($params);
     }
 
     function resolvePOST(array $get){

@@ -13,15 +13,11 @@ function exception($e){
 $db = new base\MySQL('localhost', 'root', '', 'base');
 
 // setup router
+$controllerParams = array('welcome' => 'Mr. X');
+$viewParams = array('some_var' => 'This is some data!');
+
 $router = new base\Router('base/src/test');
-
-$router->when('/:welcome?/:nr?/',
-			  array('GET', 'POST'),
-			  new HomeController(new HomeView()));
-
-$router->when('/about',
-			  array('GET'),
-			  new AboutController(new AboutView()));
+$router->loadRouting('routing.json', $controllerParams, $viewParams);
 
 $router->when('/form',
 			  array('POST'),

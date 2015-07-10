@@ -2,6 +2,11 @@
 class HomeView extends base\View{
     private $welcome = '';
     private $nr = null;
+    private $var = '';
+
+    function __construct(array $params){
+        $this->var = $params['some_var'];
+    }
 
     function display(){
         print '<!DOCTYPE html><html><head><base href="/base/src/test/" />';
@@ -23,6 +28,7 @@ class HomeView extends base\View{
         }
 
         print '<form action="./form" method="post"><input type="submit" value="post"></form>';
+        print $this->var;
         print '</body></html>';
     }
 

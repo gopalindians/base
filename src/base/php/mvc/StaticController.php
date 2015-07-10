@@ -3,13 +3,14 @@
 namespace base;
 
 /**
- * Basic controller that displays a single view, no matter which HTTP method is used.
+ * Basic controller that displays a single view,
+ * no matter which HTTP method is used or parameters are passed.
  *
  * @author Marvin Blum
  */
 class StaticController extends Controller{
 	function __construct($view){
-		Controller::__construct($view);
+		Controller::__construct(array(), $view);
 	}
 
 	function resolveGET(array $get, $method){

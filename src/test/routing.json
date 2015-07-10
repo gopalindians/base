@@ -1,0 +1,17 @@
+{
+	"routes":[
+		{
+			"when":"/:welcome?/:nr?",
+			"methods":["GET", "POST"],
+			"controller":"\\HomeController",
+			"controllerParams":["welcome"],
+			"view":"\\HomeView",
+			"viewParams":["some_var"]
+		},
+		{
+			"when":"/about",
+			"controller":"AboutController",
+			"view":"AboutView"
+		}
+	]
+}

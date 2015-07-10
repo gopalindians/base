@@ -1,7 +1,7 @@
 <?php
 class AboutController extends base\Controller{
-    function __construct($view){
-        base\Controller::__construct($view);
+    function __construct(array $params, $view){
+        base\Controller::__construct($params, $view);
     }
 
     function resolveGET(array $get, $method){

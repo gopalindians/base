@@ -21,6 +21,95 @@ class Router{
 		$this->basePath = $basePath;
 	}
 
+	private function getMethods($route){
+		if(isset($route->methods)){
+			return $route->methods;
+		}
+
+		return array(HttpMethod::GET);
+	}
+
+	private function getParams($params, $selection){
+		$selected = array();
+
+		foreach($selection AS $value){
+			if(isset($params[$value])){
+				$selected[$value] = $params[$value];
+			}
+		}
+
+		return $selected;
+	}
+
+	private function getController($route, $controllorParamsSelection, $viewParamsSelection){
+		$controllerParams = array();
+		$viewParams = array();
+
+		if(isset($route->controllerParams)){
+			$controllerParams = $this->getParams($controllorParamsSelection, $route->controllerParams);
+		}
+
+		if(isset($route->viewParams)){
+			$viewParams = $this->getParams($viewParamsSelection, $route->viewParams);
+		}
+
+		if(isset($route->view)){
+			return new $route->controller($controllerParams, new $route->view($viewParams));
+		}
+		else{
+			return new $route->controller($controllerParams);
+		}
+	}
+
+	/**
+	 * Reads a json configuration to set up routing.
+	 * Json format:
+	 *
+	 * {[
+	 *   {'when:'/route',
+	 *    'methods':['GET', 'POST'],
+	 *    'controller':'ControllerClassName',
+	 *    'controllerParams':['controller', 'variable', 'names'],
+	 *    'view':'ViewClassName',
+	 *    'viewParams':['view', 'variable', 'names']}
+	 * ]}
+	 *
+	 * Parameters will be passed as an associative array first, even if empty.
+	 * The view will be allways passed last to the control.
+	 * methods, controllerParams, view and viewParams are optional.
+	 *
+	 * @param file the file containing the json for routing
+	 * @param controllerParams params used while setting up the controller (optional)
+	 * @param viewParams params used while setting up the view (optional)
+	 * @return void
+	 */
+	function loadRouting($file, array $controllerParams = array(), array $viewParams = array()){
+		if(($content = @file_get_contents($file)) === FALSE){
+			throw new RouteFileNotFoundException($file);
+		}
+
+		try{
+			$data = @json_decode($content);
+		}
+		catch(\Exception $e){
+			throw new RouteFileParseException($file);
+		}
+
+		if(!isset($data->routes) || !is_array($data->routes)){
+			throw new RouteFileParseException($file);
+		}
+
+		foreach($data->routes AS $value){
+			if(!isset($value->when) || !isset($value->controller)){
+				throw new RouteFileParseException($file);
+			}
+
+			$this->when($value->when,
+						$this->getMethods($value),
+						$this->getController($value, $controllerParams, $viewParams));
+		}
+	}
+
 	/**
 	 * Registers a new route.
 	 *

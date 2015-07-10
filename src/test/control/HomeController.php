@@ -1,13 +1,22 @@
 <?php
 class HomeController extends base\Controller{
-    function __construct(HomeView $view){
-        base\Controller::__construct($view);
+    private $defaultWelcome = 'You';
+
+    function __construct(array $params, $view){
+        base\Controller::__construct($params, $view);
+
+        if(isset($params['welcome'])){
+            $this->defaultWelcome = $params['welcome'];
+        }
     }
 
     function resolveGET(array $get){
     	if(isset($get['welcome'])){
     		$this->view->setWelcome($get['welcome']);
     	}
+        else{
+            $this->view->setWelcome($this->defaultWelcome);
+        }
 
     	if(isset($get['nr'])){
     		$this->view->setNr($get['nr']);
