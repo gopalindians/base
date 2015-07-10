@@ -1,4 +1,4 @@
-base.util.js.namespace("mvc", base);
+base.util.js.namespace('mvc', base);
 
 /**
  * Constructor.
@@ -7,8 +7,8 @@ base.util.js.namespace("mvc", base);
  * @param method the method name which must be overwritten
  */
 base.mvc.MethodNotImplementedException = function(classname, method){
-	this.name = "MethodNotImplementedException";
-	this.message = "The method "+method+" was not implemented in class "+classname;
+	this.name = 'MethodNotImplementedException';
+	this.message = 'The method '+method+' was not implemented in class '+classname;
 };
 
 base.util.js.extend(Error, base.mvc.MethodNotImplementedException);

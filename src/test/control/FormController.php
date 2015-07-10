@@ -4,7 +4,7 @@ class FormController extends base\Controller{
         base\Controller::__construct();
     }
 
-    function exec(array $get, $method){
+    function resolvePOST(array $get){
         var_dump($_POST);
     }
 }

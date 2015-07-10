@@ -16,7 +16,7 @@ base.util.js = {};
  * @return the parent namespace object
  */
 base.util.js.namespace = function(space, parent){
-	var spaces = space.split(".");
+	var spaces = space.split('.');
 	
 	if(!spaces.length || parent == null){
 		return null;

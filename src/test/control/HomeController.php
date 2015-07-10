@@ -4,26 +4,25 @@ class HomeController extends base\Controller{
         base\Controller::__construct($view);
     }
 
-    function exec(array $get, $method){
-        if($method == 'GET'){
-        	if(isset($get['welcome'])){
-        		$this->view->setWelcome($get['welcome']);
-        	}
+    function resolveGET(array $get){
+    	if(isset($get['welcome'])){
+    		$this->view->setWelcome($get['welcome']);
+    	}
 
-        	if(isset($get['nr'])){
-        		$this->view->setNr($get['nr']);
-        	}
+    	if(isset($get['nr'])){
+    		$this->view->setNr($get['nr']);
+    	}
 
-            $this->view->display();
-        }
-        else{
-            $test = TestModel::jsonDeserialize($_POST);
-            
-            if($test){
-                $test->a = 123;
-                $test->b = 456;
-                print $test->jsonSerialize();
-            }
+        $this->view->display();     
+    }
+
+    function resolvePOST(array $get){
+        $test = TestModel::jsonDeserialize($_POST);
+        
+        if($test){
+            $test->a = 123;
+            $test->b = 456;
+            print $test->jsonSerialize();
         }
     }
 }

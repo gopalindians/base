@@ -12,7 +12,7 @@ class DbSelectException extends \Exception{
     const CODE = 4;
 
     function __construct(){
-        \Exception::__construct(DbSelectException::MESSAGE, DbSelectException::CODE);
+        \Exception::__construct(self::MESSAGE, self::CODE);
     }
 }
 ?>

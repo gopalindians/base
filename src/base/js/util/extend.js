@@ -1,4 +1,4 @@
-base.util.js.namespace("util.js", base);
+base.util.js.namespace('util.js', base);
 
 /**
  * Function to extends JS classes.

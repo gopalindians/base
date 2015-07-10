@@ -40,13 +40,13 @@ class Route{
 
 	private function resolveRoute($route, $setOptionalParams = false){
 		$route = rtrim($route, '/');
-		$routeEnd = strpos($route, Route::PARAM_DELIMITER);
+		$routeEnd = strpos($route, self::PARAM_DELIMITER);
 
 		if($routeEnd === FALSE){
 			return array($route, array());
 		}
 
-		$get = explode(Route::PARAM_DELIMITER, substr($route, $routeEnd, strlen($route)));
+		$get = explode(self::PARAM_DELIMITER, substr($route, $routeEnd, strlen($route)));
 
 		foreach($get AS $key => $value){
 			// remove empty
@@ -56,7 +56,7 @@ class Route{
 			}
 
 			// test optional
-			if(substr($value, -1) == Route::PARAM_OPTIONAL){
+			if(substr($value, -1) == self::PARAM_OPTIONAL){
 				if($setOptionalParams){
 					$this->optionalParams++;
 				}

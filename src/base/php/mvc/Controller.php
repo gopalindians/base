@@ -20,13 +20,57 @@ abstract class Controller{
 	}
 
 	/**
-	 * Execute function, will be executed by Router.
+	 * Execute function, will be executed by Router on GET requests.
 	 *
 	 * @param get contains the GET parameters
 	 * @param method the used method to access the route
 	 * @return void
 	 */
-	abstract function exec(array $get, $method);
+	function resolveGET(array $get){
+		
+	}
+
+	/**
+	 * @see resolveGET(array $get)
+	 */
+	function resolvePOST(array $get){
+		
+	}
+
+	/**
+	 * @see resolveGET(array $get)
+	 */
+	function resolvePUT(array $get){
+
+	}
+
+	/**
+	 * @see resolveGET(array $get)
+	 */
+	function resolveDELETE(array $get){
+
+	}
+
+	/**
+	 * @see resolveGET(array $get)
+	 */
+	function resolveHEAD(array $get){
+
+	}
+
+	/**
+	 * @see resolveGET(array $get)
+	 */
+	function resolveTRACE(array $get){
+
+	}
+
+	/**
+	 * @see resolveGET(array $get)
+	 */
+	function resolveCONNECT(array $get){
+
+	}
 
 	/**
 	 * Resets the controller and _all_ environment variables.

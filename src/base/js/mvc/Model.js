@@ -1,14 +1,14 @@
-base.util.js.namespace("mvc", base);
+base.util.js.namespace('mvc', base);
 
 /**
  * Constructor.
  *
  * @param classname pass the name of implementing class to serialize/deserialize,
- *		  should be unique, default is "Model"
+ *		  should be unique, default is 'Model'
  */
 base.mvc.Model = function(classname){
 	if(!classname){
-		this._classname = "Model";
+		this._classname = 'Model';
 	}
 	else{
 		this._classname = classname;
@@ -26,7 +26,7 @@ base.mvc.Model = function(classname){
  * @return void
  */
 base.mvc.Model.prototype.send = function(url, callback){
-	if(typeof url !== "string"){
+	if(typeof url !== 'string'){
 		return;
 	}
 
@@ -54,7 +54,7 @@ base.mvc.Model.prototype.send = function(url, callback){
  * @return void
  */
 base.mvc.Model.prototype.receive = function(data){
-	throw new base.mvc.MethodNotImplementedException("Model", "receive");
+	throw new base.mvc.MethodNotImplementedException('Model', 'receive');
 };
 
 /**
@@ -64,7 +64,7 @@ base.mvc.Model.prototype.receive = function(data){
  * @return void
  */
 base.mvc.Model.prototype.getData = function(){
-	throw new base.mvc.MethodNotImplementedException("Model", "getData");
+	throw new base.mvc.MethodNotImplementedException('Model', 'getData');
 };
 
 base.mvc.Model.prototype._receive = function(data){
@@ -94,8 +94,8 @@ base.mvc.Model.prototype._receive = function(data){
  * @param data the data which failed parsing to json.
  */
 base.mvc.DataNoJsonException = function(data){
-	this.name = "DataNoJsonException";
-	this.message = "The data could not be parsed to an JSON object! Data was: "+data;
+	this.name = 'DataNoJsonException';
+	this.message = 'The data could not be parsed to an JSON object! Data was: '+data;
 };
 
 base.util.js.extend(Error, base.mvc.DataNoJsonException);
@@ -107,8 +107,8 @@ base.util.js.extend(Error, base.mvc.DataNoJsonException);
  * @param data the data which failed parsing to json.
  */
 base.mvc.DataNoJsonException = function(data){
-	this.name = "DataNoJsonException";
-	this.message = "The data could not be parsed to an JSON object! Data was: "+data;
+	this.name = 'DataNoJsonException';
+	this.message = 'The data could not be parsed to an JSON object! Data was: '+data;
 };
 
 base.util.js.extend(Error, base.mvc.DataNoJsonException);

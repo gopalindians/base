@@ -99,7 +99,30 @@ class Router{
 
 		foreach($this->routes AS $value){
 			if($value->matches($route) && in_array($_SERVER['REQUEST_METHOD'], $value->getRequestMethods())){
-				$value->getController()->exec($value->getParams(), $_SERVER['REQUEST_METHOD']);
+				switch($_SERVER['REQUEST_METHOD']){
+					case HttpMethod::GET:
+						$value->getController()->resolveGET($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						break;
+					case HttpMethod::POST:
+						$value->getController()->resolvePOST($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						break;
+					case HttpMethod::PUT:
+						$value->getController()->resolvePUT($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						break;
+					case HttpMethod::DELETE:
+						$value->getController()->resolveDELETE($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						break;
+					case HttpMethod::HEAD:
+						$value->getController()->resolveHEAD($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						break;
+					case HttpMethod::TRACE:
+						$value->getController()->resolveTRACE($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						break;
+					case HttpMethod::CONNECT:
+						$value->getController()->resolveCONNECT($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						break;
+				}
+
 				return;
 			}
 		}

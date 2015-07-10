@@ -24,7 +24,7 @@ class MySQL{
      * @param prefix use {prefix} in your queries to replace them, default is ''
      * @param disableAutocommit disables autocommit, default is true
      */
-    function __construct($host, $user, $password, $database, $prefix = '', $disableAutocommit = true, $charset = MySQL::DEFAULT_CHARSET){
+    function __construct($host, $user, $password, $database, $prefix = '', $disableAutocommit = true, $charset = self::DEFAULT_CHARSET){
         $this->con = @new \mysqli($host, $user, $password);
         $this->prefix = $prefix;
 
@@ -53,7 +53,7 @@ class MySQL{
      * @return mysqli result object
      */
     function query($query){
-        return $this->con->query(str_replace(MySQL::PREFIX_PATTERN, $this->prefix, $query));
+        return $this->con->query(str_replace(self::PREFIX_PATTERN, $this->prefix, $query));
     }
 
     /**

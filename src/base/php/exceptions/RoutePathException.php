@@ -12,7 +12,7 @@ class RoutePathException extends \Exception{
 	const CODE = 1;
 
 	function __construct(){
-		\Exception::__construct(RouterPathException::MESSAGE, RoutePathException::CODE);
+		\Exception::__construct(self::MESSAGE, self::CODE);
 	}
 }
 ?>
