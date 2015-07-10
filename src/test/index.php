@@ -1,7 +1,7 @@
 <?php
-define('FLIMSY_ROOT', '../flimsy');
+define('BASE_ROOT', '../base');
 
-require_once '../flimsy/flimsy.php';
+require_once '../base/base.php';
 require_once 'autoload.php';
 
 function exception($e){
@@ -10,12 +10,12 @@ function exception($e){
 }
 
 // setup database connection
-$db = new flimsy\MySQL('localhost', 'root', '', 'flimsy');
+$db = new base\MySQL('localhost', 'root', '', 'base');
 
 // setup router
-$router = new flimsy\Router('flimsy/src/test');
+$router = new base\Router('base/src/test');
 
-$router->when('/:welcome?/:nr?',
+$router->when('/:welcome?/:nr?/',
 			  array('GET', 'POST'),
 			  new HomeController(new HomeView()));
 
@@ -36,10 +36,10 @@ $router->otherwise('/404');
 try{
 	$router->resolve();
 }
-catch(flimsy\RouterPathException $e){
+catch(base\RouterPathException $e){
 	exception($e);
 }
-catch(flimsy\RouteUnresolvedException $e){
+catch(base\RouteUnresolvedException $e){
 	exception($e);
 }
 ?>

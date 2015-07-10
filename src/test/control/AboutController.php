@@ -1,7 +1,7 @@
 <?php
-class AboutController extends flimsy\Controller{
+class AboutController extends base\Controller{
     function __construct($view){
-        flimsy\Controller::__construct($view);
+        base\Controller::__construct($view);
     }
 
     function exec(array $get, $method){

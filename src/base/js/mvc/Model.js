@@ -1,4 +1,4 @@
-flimsy.util.js.namespace("mvc", flimsy);
+base.util.js.namespace("mvc", base);
 
 /**
  * Constructor.
@@ -6,7 +6,7 @@ flimsy.util.js.namespace("mvc", flimsy);
  * @param classname pass the name of implementing class to serialize/deserialize,
  *		  should be unique, default is "Model"
  */
-flimsy.mvc.Model = function(classname){
+base.mvc.Model = function(classname){
 	if(!classname){
 		this._classname = "Model";
 	}
@@ -25,7 +25,7 @@ flimsy.mvc.Model = function(classname){
  * @param callback a callback function which will be called to receive the result
  * @return void
  */
-flimsy.mvc.Model.prototype.send = function(url, callback){
+base.mvc.Model.prototype.send = function(url, callback){
 	if(typeof url !== "string"){
 		return;
 	}
@@ -53,8 +53,8 @@ flimsy.mvc.Model.prototype.send = function(url, callback){
  * @param data received data as json object
  * @return void
  */
-flimsy.mvc.Model.prototype.receive = function(data){
-	throw new flimsy.mvc.MethodNotImplementedException("Model", "receive");
+base.mvc.Model.prototype.receive = function(data){
+	throw new base.mvc.MethodNotImplementedException("Model", "receive");
 };
 
 /**
@@ -63,11 +63,11 @@ flimsy.mvc.Model.prototype.receive = function(data){
  *
  * @return void
  */
-flimsy.mvc.Model.prototype.getData = function(){
-	throw new flimsy.mvc.MethodNotImplementedException("Model", "getData");
+base.mvc.Model.prototype.getData = function(){
+	throw new base.mvc.MethodNotImplementedException("Model", "getData");
 };
 
-flimsy.mvc.Model.prototype._receive = function(data){
+base.mvc.Model.prototype._receive = function(data){
 	try{
 		var obj = JSON.parse(data);
 
@@ -77,7 +77,7 @@ flimsy.mvc.Model.prototype._receive = function(data){
 		}
 	}
 	catch(e){
-		throw new flimsy.mvc.DataNoJsonException(data);
+		throw new base.mvc.DataNoJsonException(data);
 	}
 
 	this.receive(obj.data);
@@ -89,26 +89,26 @@ flimsy.mvc.Model.prototype._receive = function(data){
 
 /**
  * Constructor.
- * This exception is used in flimsy.mvc.Model.
+ * This exception is used in base.mvc.Model.
  *
  * @param data the data which failed parsing to json.
  */
-flimsy.mvc.DataNoJsonException = function(data){
+base.mvc.DataNoJsonException = function(data){
 	this.name = "DataNoJsonException";
 	this.message = "The data could not be parsed to an JSON object! Data was: "+data;
 };
 
-flimsy.util.js.extend(Error, flimsy.mvc.DataNoJsonException);
+base.util.js.extend(Error, base.mvc.DataNoJsonException);
 
 /**
  * Constructor.
- * This exception is used in flimsy.mvc.Model.
+ * This exception is used in base.mvc.Model.
  *
  * @param data the data which failed parsing to json.
  */
-flimsy.mvc.DataNoJsonException = function(data){
+base.mvc.DataNoJsonException = function(data){
 	this.name = "DataNoJsonException";
 	this.message = "The data could not be parsed to an JSON object! Data was: "+data;
 };
 
-flimsy.util.js.extend(Error, flimsy.mvc.DataNoJsonException);
+base.util.js.extend(Error, base.mvc.DataNoJsonException);

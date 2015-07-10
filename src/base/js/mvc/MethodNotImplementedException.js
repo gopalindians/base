@@ -1,4 +1,4 @@
-flimsy.util.js.namespace("mvc", flimsy);
+base.util.js.namespace("mvc", base);
 
 /**
  * Constructor.
@@ -6,9 +6,9 @@ flimsy.util.js.namespace("mvc", flimsy);
  * @param classname the classname
  * @param method the method name which must be overwritten
  */
-flimsy.mvc.MethodNotImplementedException = function(classname, method){
+base.mvc.MethodNotImplementedException = function(classname, method){
 	this.name = "MethodNotImplementedException";
 	this.message = "The method "+method+" was not implemented in class "+classname;
 };
 
-flimsy.util.js.extend(Error, flimsy.mvc.MethodNotImplementedException);
+base.util.js.extend(Error, base.mvc.MethodNotImplementedException);

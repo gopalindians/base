@@ -1,21 +1,21 @@
 /**
- * flimsy namespace setup
- * INCLUDE THIS FILE BEFORE OTHER FLIMSY JS FILES!
+ * base namespace setup
+ * INCLUDE THIS FILE BEFORE OTHER base JS FILES!
  */
 
-var flimsy = {};
-flimsy.util = {};
-flimsy.util.js = {};
+var base = {};
+base.util = {};
+base.util.js = {};
 
 /**
- * Adds an object to flimsy namespace by string if it does not exist.
+ * Adds an object to base namespace by string if it does not exist.
  * Example: my.sample.namespace
  *
  * @param space the new namespace object
  * @param parent the base namespace object, "space" will be chained
  * @return the parent namespace object
  */
-flimsy.util.js.namespace = function(space, parent){
+base.util.js.namespace = function(space, parent){
 	var spaces = space.split(".");
 	
 	if(!spaces.length || parent == null){

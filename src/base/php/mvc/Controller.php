@@ -1,6 +1,6 @@
 <?php
 
-namespace flimsy;
+namespace base;
 
 /**
  * MVC controller class. Controls your application server side.

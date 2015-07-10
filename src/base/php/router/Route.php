@@ -1,6 +1,6 @@
 <?php
 
-namespace flimsy;
+namespace base;
 
 /**
  * Class to define a route on your page. Used in Router.

@@ -1,6 +1,6 @@
 <?php
 
-namespace flimsy;
+namespace base;
 
 /**
  * Model class, representing an entity on server side and database.

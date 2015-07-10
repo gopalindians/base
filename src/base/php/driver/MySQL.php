@@ -1,13 +1,13 @@
 <?php
 
-namespace flimsy;
+namespace base;
 
 /**
  * MySQL class. Handles connection and query to a MySQL database.
  *
  * @author Marvin Blum
  */
-class MySQL implements Database{
+class MySQL{
     const DEFAULT_CHARSET = 'ISO-8859-1';
     const PREFIX_PATTERN = '{prefix}';
 
@@ -24,7 +24,7 @@ class MySQL implements Database{
      * @param prefix use {prefix} in your queries to replace them, default is ''
      * @param disableAutocommit disables autocommit, default is true
      */
-    function __construct($host, $user, $password, $database, $prefix = '', $disableAutocommit = true){
+    function __construct($host, $user, $password, $database, $prefix = '', $disableAutocommit = true, $charset = MySQL::DEFAULT_CHARSET){
         $this->con = @new \mysqli($host, $user, $password);
         $this->prefix = $prefix;
 
@@ -41,7 +41,7 @@ class MySQL implements Database{
             $this->con->autocommit(false);
         }
 
-        $this->con->set_charset(MySQL::DEFAULT_CHARSET);
+        $this->con->set_charset($charset);
     }
 
     function __destruct(){

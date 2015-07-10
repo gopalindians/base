@@ -1,6 +1,6 @@
 <?php
 
-namespace flimsy;
+namespace base;
 
 /**
  * Class for server side routing.
@@ -120,24 +120,6 @@ class Router{
 		else{
 			$this->resolveWithoutRedirect();
 		}
-	}
-}
-
-class RoutePathException extends \Exception{
-	const MESSAGE = 'Could not parse URL, resolving route is not possible.';
-	const CODE = 1;
-
-	function __construct(){
-		\Exception::__construct(RouterPathException::MESSAGE, RoutePathException::CODE);
-	}
-}
-
-class RouteUnresolvedException extends \Exception{
-	const MESSAGE = 'The URL could not be resolved to a route: ';
-	const CODE = 2;
-
-	function __construct($url = ''){
-		\Exception::__construct(RouteUnresolvedException::MESSAGE.$url, RouteUnresolvedException::CODE);
 	}
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-namespace flimsy;
+namespace base;
 
 /**
  * MVC view class. Used to display a page.

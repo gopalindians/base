@@ -1,7 +1,7 @@
 <?php
-class FormController extends flimsy\Controller{
+class FormController extends base\Controller{
     function __construct(){
-        flimsy\Controller::__construct();
+        base\Controller::__construct();
     }
 
     function exec(array $get, $method){

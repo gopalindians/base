@@ -1,4 +1,4 @@
-flimsy.util.js.namespace("util.js", flimsy);
+base.util.js.namespace("util.js", base);
 
 /**
  * Function to extends JS classes.
@@ -8,7 +8,7 @@ flimsy.util.js.namespace("util.js", flimsy);
  * @param child child class (Constructor, not an instance)
  * @return void
  */
-flimsy.util.js.extend = function(base, child){
+base.util.js.extend = function(base, child){
 	child.prototype = Object.create(base.prototype);
     child.prototype.constructor = child;
 };

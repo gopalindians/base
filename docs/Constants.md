@@ -1,7 +1,7 @@
 # Constants
 
-Constants are used to configure flimsy. This file provides a list describing all flimsy constants.
+Constants are used to configure base. This file provides a list describing all base constants.
 
 | Constant | Description |
 | -------- | ----------- |
-| FLIMSY_ROOT | Root of flimsy directory relative to websites root folder. |
+| BASE_ROOT | Root of base directory relative to websites root folder. |
