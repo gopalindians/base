@@ -15,12 +15,12 @@ A lightweight PHP/JS router and MVC framework, build for hand written web applic
 * PHP (latest version recommended)
 * JS
 * .htaccess support (RewriteEngine and FollowSymLinks)
-* jQuery (include before *base* JS files!)
 * MySQL (optional)
 
 ## Contribute
 
 In order to contribute, please create a pull request and/or use the issue tracker on GitHub. You can also send me an e-mail: baseframework@marvinblum.de
+You can find some tasks that needs to be done in [ToDo.md](ToDo.md).
 
 ## License
 

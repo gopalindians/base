@@ -10,7 +10,6 @@ class HomeView extends base\View{
 
     function display(){
         print '<!DOCTYPE html><html><head><base href="/base/src/test/" />';
-        print '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>';
         print '<script src="../base/base.js"></script>';
         print '<script src="model/TestModel.js"></script>';
         print '<script src="control/HomeController.js"></script>';

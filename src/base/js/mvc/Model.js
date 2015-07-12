@@ -30,20 +30,23 @@ base.mvc.Model.prototype.send = function(url, callback){
 		return;
 	}
 
+	// connect
+	var req = new XMLHttpRequest();
+	req.open('POST', url, true);
+	req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+	// callback
 	this._callback = callback;
 
 	var self = this;
-	var res = function(data){
-		self._receive(data);
+	req.onreadystatechange = function(){
+		if(req.readyState === 4 && req.status === 200){
+			self._receive(req.responseText);
+		}
 	};
 
-	// create object and send
-	var name = this._classname;
-	var data = JSON.stringify(this.getData());
-	var obj = {};
-	obj[name] = data;
-
-	$.post(url, obj, res);
+	// send
+	req.send(this._classname+'='+JSON.stringify(this.getData()));
 };
 
 /**

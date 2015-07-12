@@ -1,6 +1,6 @@
-$(document).ready(function(){
+window.onload = function(){
 	var test = new TestModel();
-	
+
 	// before
 	console.log(test.a);
 	console.log(test.b);
@@ -11,4 +11,4 @@ $(document).ready(function(){
 	}
 
 	test.send("./", callback);
-});
+};
