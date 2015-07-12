@@ -40,7 +40,11 @@ base.mvc.Model.prototype.send = function(url, callback){
 
 	var self = this;
 	req.onreadystatechange = function(){
-		if(req.readyState === 4 && req.status === 200){
+		if(req.status != 200){
+			throw new base.exceptions.AjaxStatusException(self._classname, req.status);
+		}
+
+		if(req.readyState == 4){
 			self._receive(req.responseText);
 		}
 	};
@@ -57,7 +61,7 @@ base.mvc.Model.prototype.send = function(url, callback){
  * @return void
  */
 base.mvc.Model.prototype.receive = function(data){
-	throw new base.mvc.MethodNotImplementedException('Model', 'receive');
+	throw new base.exceptions.MethodNotImplementedException('Model', 'receive');
 };
 
 /**
@@ -67,7 +71,7 @@ base.mvc.Model.prototype.receive = function(data){
  * @return void
  */
 base.mvc.Model.prototype.getData = function(){
-	throw new base.mvc.MethodNotImplementedException('Model', 'getData');
+	throw new base.exceptions.MethodNotImplementedException('Model', 'getData');
 };
 
 base.mvc.Model.prototype._receive = function(data){
@@ -80,7 +84,7 @@ base.mvc.Model.prototype._receive = function(data){
 		}
 	}
 	catch(e){
-		throw new base.mvc.DataNoJsonException(data);
+		throw new base.exceptions.DataNoJsonException(data);
 	}
 
 	this.receive(obj.data);
@@ -89,29 +93,3 @@ base.mvc.Model.prototype._receive = function(data){
 		this._callback(obj.data);
 	}
 };
-
-/**
- * Constructor.
- * This exception is used in base.mvc.Model.
- *
- * @param data the data which failed parsing to json.
- */
-base.mvc.DataNoJsonException = function(data){
-	this.name = 'DataNoJsonException';
-	this.message = 'The data could not be parsed to an JSON object! Data was: '+data;
-};
-
-base.util.js.extend(Error, base.mvc.DataNoJsonException);
-
-/**
- * Constructor.
- * This exception is used in base.mvc.Model.
- *
- * @param data the data which failed parsing to json.
- */
-base.mvc.DataNoJsonException = function(data){
-	this.name = 'DataNoJsonException';
-	this.message = 'The data could not be parsed to an JSON object! Data was: '+data;
-};
-
-base.util.js.extend(Error, base.mvc.DataNoJsonException);
