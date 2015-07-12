@@ -12,4 +12,4 @@ This file lists all possible exceptions and error codes thrown by base.
 | php | RouteFileParseException | 6 | Exception thrown when a route file cannot be parsed. |
 | js | AjaxStatusException | - | Thrown if a bad status was returned by ajax request. |
 | js | DataNoJsonException | - | Thrown if an json object cannot be parsed. |
-| js | MethodNotImplementedException | - | Thrown if a "abstract" JavaScript method must be implemented, but hasen't. |
+| js | MethodNotImplementedException | - | Thrown if a "abstract" JavaScript method must be implemented, but hasn't. |
