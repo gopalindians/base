@@ -74,7 +74,7 @@ class Route{
 	 * @param route route to test
 	 */
 	function matches($route){
-		$route = rtrim($route, '/');
+		$route = '/'.trim($route, '/');
 		$routeParse = $this->resolveRoute($route);
 		$accept = $this->route == $routeParse[0];
 
