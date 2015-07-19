@@ -23,11 +23,21 @@ $router->when('/form',
 			  array('POST'),
 			  new FormController());
 
+$router->when('on//deep////route///',
+			  array('GET'),
+			  new base\StaticController(new DeepView()));
+
+$router->when('/triggerMe',
+			  array('GET', 'POST'),
+			  new base\StaticController(new TriggerView()));
+
 $router->when('/404',
 			  array('GET', 'POST'),
 			  new Error404Controller());
 
 $router->otherwise('/404');
+
+$router->trigger('/triggerMe'); // always trigger
 
 try{
 	$router->resolve();

@@ -39,7 +39,7 @@ class Route{
 	}
 
 	private function resolveRoute($route, $setOptionalParams = false){
-		$route = rtrim($route, '/');
+		$route = preg_replace('~/+~', '/', rtrim('/'.$route, '/'));
 		$routeEnd = strpos($route, self::PARAM_DELIMITER);
 
 		if($routeEnd === FALSE){
@@ -74,8 +74,7 @@ class Route{
 	 * @param route route to test
 	 */
 	function matches($route){
-		$route = '/'.trim($route, '/');
-		$routeParse = $this->resolveRoute($route);
+		$routeParse = $this->resolveRoute($route); // make sure there is a slash in front
 		$accept = $this->route == $routeParse[0];
 
 		if($accept && count($routeParse[1]) >= count($this->routeParams)-$this->optionalParams && count($routeParse[1]) <= count($this->routeParams)){

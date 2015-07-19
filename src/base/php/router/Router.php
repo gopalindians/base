@@ -119,6 +119,7 @@ class Router{
 	 * @see Route constructor
 	 * @param controller the controller for this route
 	 * @see Route constructor
+	 * @return true, when the route was added, false if they existed already
 	 */
 	function when($route, array $method, Controller $controller){
 		if(isset($this->routes[$route])){
@@ -135,6 +136,7 @@ class Router{
 	 * If the alternative route cannot be resolved, an exception will be thrown.
 	 *
 	 * @param route alternative route
+	 * @return void
 	 */
 	function otherwise($route){
 		$this->redirect = $route;
@@ -164,6 +166,18 @@ class Router{
 		}
 	}
 
+	/**
+	 * Triggers a route with given parameters.
+	 * This method won't redirect to "otherwise" route, when route cannot be resolved!
+	 *
+	 * @param url the route to be triggered, containing get parameters
+	 * @throws RouteUnresolvedException when the route cannot be resolved
+	 * @return void
+	 */
+	function trigger($route){
+		$this->resolveWithoutRedirect($route);
+	}
+
 	private function resolveWithRedirect(){
 		try{
 			$this->resolveWithoutRedirect();
@@ -174,6 +188,8 @@ class Router{
 	}
 
 	private function resolveWithoutRedirect($url = null){
+		$route = '';
+
 		try{
 			if(!$url){
 				$route = preg_replace('~/?'.$this->basePath.'~i', '', $_SERVER['REQUEST_URI']);
@@ -223,7 +239,7 @@ class Router{
 	 * Resolves current URL.
 	 *
 	 * @return void
-	 * @throws RoutePathException, RouteUnresolvedException, RouteUnacceptedRequestException
+	 * @throws RoutePathException, RouteUnresolvedException
 	 */
 	function resolve(){
 		if($this->redirect){
