@@ -4,7 +4,7 @@ class Error404Controller extends base\Controller{
         base\Controller::__construct($params);
     }
 
-    function resolveGET(array $get, $method){
+    function resolveGET(array $get){
         print '<h1>#404</h1>';
     }
 }

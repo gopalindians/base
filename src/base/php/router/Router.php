@@ -167,15 +167,15 @@ class Router{
 	}
 
 	/**
-	 * Triggers a route with given parameters.
+	 * Triggers a route with given parameters and methods.
 	 * This method won't redirect to "otherwise" route, when route cannot be resolved!
 	 *
 	 * @param url the route to be triggered, containing get parameters
 	 * @throws RouteUnresolvedException when the route cannot be resolved
 	 * @return void
 	 */
-	function trigger($route){
-		$this->resolveWithoutRedirect($route);
+	function trigger($route, $methods = array(HttpMethod::GET)){
+		$this->resolveWithoutRedirect($route, $methods);
 	}
 
 	private function resolveWithRedirect(){
@@ -187,7 +187,8 @@ class Router{
 		}
 	}
 
-	private function resolveWithoutRedirect($url = null){
+	private function resolveWithoutRedirect($url = null, array $methods = null){
+		// get route from url
 		$route = '';
 
 		try{
@@ -202,29 +203,41 @@ class Router{
 			throw new RoutePathException();
 		}
 
+		// set methods
+		if(!$methods){
+			$methods = array($_SERVER['REQUEST_METHOD']);
+		}
+
+		// resolve
+		foreach($methods AS $method){
+			$this->resolveUrl($route, $method);
+		}
+	}
+
+	private function resolveUrl($route, $method){
 		foreach($this->routes AS $value){
-			if($value->matches($route) && in_array($_SERVER['REQUEST_METHOD'], $value->getRequestMethods())){
-				switch($_SERVER['REQUEST_METHOD']){
+			if($value->matches($route) && in_array($method, $value->getRequestMethods())){
+				switch($method){
 					case HttpMethod::GET:
-						$value->getController()->resolveGET($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						$value->getController()->resolveGET($value->getParams());
 						break;
 					case HttpMethod::POST:
-						$value->getController()->resolvePOST($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						$value->getController()->resolvePOST($value->getParams());
 						break;
 					case HttpMethod::PUT:
-						$value->getController()->resolvePUT($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						$value->getController()->resolvePUT($value->getParams());
 						break;
 					case HttpMethod::DELETE:
-						$value->getController()->resolveDELETE($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						$value->getController()->resolveDELETE($value->getParams());
 						break;
 					case HttpMethod::HEAD:
-						$value->getController()->resolveHEAD($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						$value->getController()->resolveHEAD($value->getParams());
 						break;
 					case HttpMethod::TRACE:
-						$value->getController()->resolveTRACE($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						$value->getController()->resolveTRACE($value->getParams());
 						break;
 					case HttpMethod::CONNECT:
-						$value->getController()->resolveCONNECT($value->getParams(), $_SERVER['REQUEST_METHOD']);
+						$value->getController()->resolveCONNECT($value->getParams());
 						break;
 				}
 

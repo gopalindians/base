@@ -4,7 +4,7 @@ class AboutController extends base\Controller{
         base\Controller::__construct($params, $view);
     }
 
-    function resolveGET(array $get, $method){
+    function resolveGET(array $get){
         $this->view->display();
     }
 }

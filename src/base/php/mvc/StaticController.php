@@ -13,11 +13,11 @@ class StaticController extends Controller{
 		Controller::__construct(array(), $view);
 	}
 
-	function resolveGET(array $get, $method){
+	function resolveGET(array $get){
 		$this->view->display();
 	}
 
-	function resolvePOST(array $get, $method){
+	function resolvePOST(array $get){
 		$this->view->display();
 	}
 

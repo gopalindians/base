@@ -28,8 +28,8 @@ $router->when('on//deep////route///',
 			  new base\StaticController(new DeepView()));
 
 $router->when('/triggerMe',
-			  array('GET', 'POST'),
-			  new base\StaticController(new TriggerView()));
+			  array('POST'),
+			  new TriggerController());
 
 $router->when('/404',
 			  array('GET', 'POST'),
@@ -37,7 +37,7 @@ $router->when('/404',
 
 $router->otherwise('/404');
 
-$router->trigger('/triggerMe'); // always trigger
+$router->trigger('/triggerMe', array('POST')); // always trigger
 
 try{
 	$router->resolve();
