@@ -63,11 +63,44 @@ catch(base\RouteUnresolvedException $e){
 
 It is possible to trigger a route (= controller). This can be used to execute some code in a controller, like reading data from database that is always needed:
 
-```
+```PHP
 $router->trigger('/myroute', array('GET', 'POST'));
 ```
 
 This will trigger the GET and POST methods from "myroute" controller. The methods are optional, if you leave them out, the GET method will be used by default.
+
+### Route file (JSON)
+
+It is possible to load routes from a JSON file. To achive this, you must provide two arrays, containing the controller and view parameters, which will be passed if set for a route. Here is an example for a route file:
+
+```JSON
+{
+	"routes":[
+		{
+			"when":"/:welcome?/:nr?",
+			"methods":["GET", "POST"],
+			"controller":"\\HomeController",
+			"controllerParams":["welcome"],
+			"view":"\\HomeView",
+			"viewParams":["some_var"]
+		},
+		{
+			"when":"/about",
+			"controller":"AboutController",
+			"view":"AboutView"
+		}
+	]
+}
+```
+
+Load it and pass required parameters:
+
+```PHP
+$controllerParams = array('welcome' => 'Mr. X'); // required for "/:welcome?/:nr?" route
+$viewParams = array('some_var' => 'This is some data!'); // required for "/:welcome?/:nr?" route
+
+$router->loadRouting('routing.json', $controllerParams, $viewParams);
+```
 
 ## Routing in HTML and file paths
 
