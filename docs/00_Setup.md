@@ -9,8 +9,8 @@
 Setup *base* in your index.php:
 
 ```PHP
-define('BASE_ROOT', 'path/to/*base*');
-require_once 'path/to/*base*/*base*.php'; // this will include all required classes
+define('BASE_ROOT', 'path/to/base');
+require_once 'path/to/base/base.php'; // this will include all required classes via autoload
 ```
 
-See docs/Constants.md for all available or defined constants.
+Constants are used for settings. See docs/Constants.md for all available constants.
