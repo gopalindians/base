@@ -104,7 +104,7 @@ $router->loadRouting('routing.json', $controllerParams, $viewParams);
 
 ## Routing in HTML and file paths
 
-Since we use a RESTful URL, relative file paths cannot be resolved correctly in HTML. To solve this issue use one of the following methods:
+Since we use a RESTful URL, relative file paths cannot be resolved correctly in HTML, **if your pages root is located in a sub directory of your domain (e.g. http://yourpage.com/your/base/path)**. To solve this issue use one of the following methods:
 
 ```HTML
 <!-- set the absolute base path, which is used to resolve ALL other relative paths (best solution in my opinion): -->
