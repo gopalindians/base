@@ -1,18 +1,16 @@
 # MVC
 
-*Requires revision*
-
 ## Controller
 
 To write a controller you need to extend the *Controller* class:
 
 ```PHP
-class MyController extends *base*\Controller{
+class MyController extends base\Controller{
     function __construct($view){ // this controller WILL use a view
-        *base*\Controller::__construct($view);
+        base\Controller::__construct($view);
     }
 
-    function exec(array $get, $method){ // accept GET parameters and HTTP method passed by router
+    function resolveGET(array $get){ // accept GET parameters, called on GET requests
         // this is a nice way to delegate work:
         if(isset($get['action'])){
             $this->doSomethingComplex();
@@ -21,6 +19,8 @@ class MyController extends *base*\Controller{
         $this->view->setName($get['name']); // pass a GET parameter to view
         $this->view->display(); // show page
     }
+    
+    // you can override resolveXY() for different methods, see Controller for more
 
     private function doSomethingComplex(){
         // do something, validate a form or something...
@@ -28,54 +28,50 @@ class MyController extends *base*\Controller{
 }
 ```
 
+There is a *StaticController*, which can be used for standard pages, without logic.
+
 ## View
 
 A view is used to display your page. As for a controller, you have to extend the *View* base class:
 
 ```PHP
-class MyView extends *base*\View{
+class MyView extends base\View{
     function display(){
         // use smarty or whatever to display your page
     }
 }
 ```
 
-### Model
+## Model
 
 A model is used to map a front end object (JavaScript) to a backend object (PHP and database), which makes it easier to store data and manipulate your page.
-The communication is established using POST Ajax request, provided by jQuery. To enable asynchronous post requests, you need to activate this in jQuery:
-
-```JS
-$.ajaxSetup({
-    async:true
-});
-```
+The communication is established using POST Ajax requests. Requests are handled asynchronous.
 
 ### Server
 
 Server sides, overload the *Model* class to create a new entity. You have to override a few methods to send and receive an object to/from the frontend:
 
 ```PHP
-class TestModel extends *base*\Model{
-    const NAME = 'TestModel';
+class TestModel extends base\Model{
+    const NAME = 'TestModel'; // classname
 
-    public $a; // some members
+    public $a; // some data
     public $b;
 
     function __construct(){
-        *base*\Model::__construct(TestModel::NAME); // pass the identification name to parent class
+        base\Model::__construct(TestModel::NAME); // pass the identification name to parent class
     }
 
     static function jsonDeserialize($post){
         // here we check and get an object from the POST request
-        if(($data = *base*\Model::checkJsonObject($post, TestModel::NAME)) == null){
+        if(($data = base\Model::checkJsonObject($post, TestModel::NAME)) == null){
             return null;
         }
 
         // if it maps to this class, create a new instance, set data and return it
         $obj = new TestModel();
-        *base*\Model::set($obj, 'a', $data); // use this static method to set members,
-        *base*\Model::set($obj, 'b', $data); // it will check the member for existance
+        base\Model::set($obj, 'a', $data); // use this static method to set members,
+        base\Model::set($obj, 'b', $data); // it will check the member for existance
 
         return $obj;
     }
@@ -110,13 +106,13 @@ As for the backend, we create a client side entity by extending the *Model* base
 
 ```JS
 var TestModel = function(){
-    *base*.mvc.Model.call(this, 'TestModel'); // pass the identification to the base class
+    base.mvc.Model.call(this, 'TestModel'); // pass the identification to the base class
 
-    this.a = 987; // some members
+    this.a = 987; // some data
     this.b = 654;
 };
 
-*base*.util.js.extend(*base*.mvc.Model, TestModel); // extend it by calling this function
+base.util.js.extend(base.mvc.Model, TestModel); // extend it by calling this function
 
 TestModel.prototype.receive = function(data){ // will be called, if an received object maps to this class
     this.a = data.a;
