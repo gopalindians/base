@@ -48,4 +48,7 @@ catch(base\RouterPathException $e){
 catch(base\RouteUnresolvedException $e){
 	exception($e);
 }
+
+// TESTS:
+require_once 'test_email.php';
 ?>
