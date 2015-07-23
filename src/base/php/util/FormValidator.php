@@ -26,7 +26,17 @@ class FormValidator{
 	 *
 	 * @return true if no field was empty, else false
 	 */
-	function notEmpty(){
+	function notEmpty($key = ''){
+		// single check
+		if(!empty($key)){
+			if(isset($this->data[$key])){
+				return !empty($this->data[$key]);
+			}
+			
+			return false;
+		}
+
+		// check all
 		$notempty = true;
 
 		foreach($this->data AS $key => $value){

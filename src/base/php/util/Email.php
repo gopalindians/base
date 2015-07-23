@@ -4,18 +4,19 @@ namespace base;
 
 /**
  * Class to send and test emails.
+ * Dev note: we need double quotes in this class, else mail() doesn't work properly.
  *
  * @author Marvin Blum
  */
 class Email{
-	const DEFAULT_CHARSET = 'ISO-8859-1';
-	const FROM = 'From';
-	const CC = 'Cc';
-	const BCC = 'Bcc';
-	const REPLY = 'Reply-To';
-	const CONTENT_TYPE = 'Content-type';
-	const CONTENT_TYPE_HTML = 'text/html';
-	const CLRF = '\r\n';
+	const DEFAULT_CHARSET = "ISO-8859-1";
+	const FROM = "From";
+	const CC = "Cc";
+	const BCC = "Bcc";
+	const REPLY = "Reply-To";
+	const CONTENT_TYPE = "Content-type";
+	const CONTENT_TYPE_HTML = "text/html";
+	const CLRF = "\r\n";
 	const MESSAGE_WORD_WRAP = 70;
 
 	// basic data
@@ -28,7 +29,7 @@ class Email{
 	private $cc = array();
 	private $bcc = array();
 	private $reply = array();
-	private $contentType = ''; // default by mail
+	private $contentType = ""; // default by mail
 	private $wrapWord = false;
 
 	/**
@@ -39,7 +40,7 @@ class Email{
 	 * @param subject the subject of the email, optional
 	 * @param message the message content of the email, optional
 	 */
-	function __construct($to = '', $toName = '', $subject = '', $message = ''){
+	function __construct($to = "", $toName = "", $subject = "", $message = ""){
 		if(!empty($to)){
 			addTo($to, $toName);
 		}
@@ -98,7 +99,7 @@ class Email{
 	 * @param name the receiver name, optional
 	 * @return true if the receiver was added, false if receiver is in list already
 	 */
-	function addTo($email, $name = ''){
+	function addTo($email, $name = ""){
 		return $this->addEmail($this->to, $email, $name);
 	}
 
@@ -192,7 +193,7 @@ class Email{
 	/**
 	 * @see addTo()
 	 */
-	function addFrom($email, $name = ''){
+	function addFrom($email, $name = ""){
 		return $this->addEmail($this->from, $email, $name);
 	}
 
@@ -234,7 +235,7 @@ class Email{
 	/**
 	 * @see addTo()
 	 */
-	function addCc($email, $name = ''){
+	function addCc($email, $name = ""){
 		return $this->addEmail($this->cc, $email, $name);
 	}
 
@@ -276,7 +277,7 @@ class Email{
 	/**
 	 * @see addTo()
 	 */
-	function addBcc($email, $name = ''){
+	function addBcc($email, $name = ""){
 		return $this->addEmail($this->bcc, $email, $name);
 	}
 
@@ -318,7 +319,7 @@ class Email{
 	/**
 	 * @see addTo()
 	 */
-	function addReply($email, $name = ''){
+	function addReply($email, $name = ""){
 		return $this->addEmail($this->reply, $email, $name);
 	}
 
@@ -380,7 +381,7 @@ class Email{
 			return;
 		}
 
-		$this->contentType = '';
+		$this->contentType = "";
 	}
 
 	/**
@@ -411,14 +412,14 @@ class Email{
 	 * @return an array containing the mail parameters: receiver, subject, message, header
 	 */
 	function test(){
-		return array('receiver' => $this->getEmails($this->to),
-					 'subject' => $this->subject,
-					 'message' => $this->getEmailContent(),
-					 'header' => $this->getHeader());
+		return array("receiver" => $this->getEmails($this->to),
+					 "subject" => $this->subject,
+					 "message" => $this->getEmailContent(),
+					 "header" => $this->getHeader());
 	}
 
 	private function getHeader(){
-		$header = '';
+		$header = "";
 
 		$header = $this->appendHeaderEmails($header, Email::FROM, $this->from);
 		$header = $this->appendHeaderEmails($header, Email::CC, $this->cc);
@@ -426,7 +427,7 @@ class Email{
 		$header = $this->appendHeaderEmails($header, Email::REPLY, $this->reply);
 
 		if(!empty($this->contentType)){
-			$header .= Email::CONTENT_TYPE.': '.$this->contentType.'; charset='.Email::DEFAULT_CHARSET;
+			$header .= Email::CONTENT_TYPE.": ".$this->contentType."; charset=".Email::DEFAULT_CHARSET;
 		}
 
 		return $header;
@@ -437,19 +438,19 @@ class Email{
 			return;
 		}
 
-		$header .= $type.': '.$this->getEmails($list);
+		$header .= $type.": ".$this->getEmails($list);
 		$header .= Email::CLRF;
 
 		return $header;
 	}
 
 	private function getEmails(&$list){
-		$str = '';
+		$str = "";
 		$first = true;
 
 		foreach($list AS $mail){
 			if(!$first){
-				$str .= ',';
+				$str .= ",";
 			}
 			else{
 				$first = false;
@@ -459,7 +460,7 @@ class Email{
 				$str .= $mail[0];
 			}
 			else{
-				$str .= $mail[1].' <'.$mail[0].'>';
+				$str .= $mail[1]." <".$mail[0].">";
 			}
 		}
 
