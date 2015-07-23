@@ -193,7 +193,7 @@ class Router{
 
 		try{
 			if(!$url){
-				$route = preg_replace('~/?'.$this->basePath.'~i', '', $_SERVER['REQUEST_URI']);
+				$route = preg_replace('~^/?'.$this->basePath.'$~i', '', $_SERVER['REQUEST_URI']);
 			}
 			else{
 				$route = $url;
