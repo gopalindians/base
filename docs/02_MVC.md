@@ -7,7 +7,7 @@ To write a controller you need to extend the *Controller* class:
 ```PHP
 class MyController extends base\Controller{
     function __construct($view){ // this controller WILL use a view
-        base\Controller::__construct($view);
+        base\Controller::__construct(array(), $view); // pass empty params array and view
     }
 
     function resolveGET(array $get){ // accept GET parameters, called on GET requests
