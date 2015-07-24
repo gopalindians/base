@@ -7,13 +7,7 @@ namespace base;
  *
  * @author Marvin Blum
  */
-class MySQL{
-    const DEFAULT_CHARSET = 'ISO-8859-1';
-    const PREFIX_PATTERN = '{prefix}';
-
-    private $con = null;
-    private $prefix;
-
+class MySQL extends Database{
     /**
      * Creates a new MySQL object and connects to database.
      *

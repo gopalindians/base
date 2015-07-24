@@ -51,4 +51,5 @@ catch(base\RouteUnresolvedException $e){
 
 // TESTS:
 require_once 'test_email.php';
+require_once 'test_pdo.php';
 ?>
