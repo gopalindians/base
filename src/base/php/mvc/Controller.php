@@ -15,7 +15,7 @@ abstract class Controller{
 	 *
 	 * @param view the View related to this controller.
 	 */
-	function __construct(array $params, $view = null){
+	function __construct(array $params = array(), $view = null){
 		$this->view = $view;
 	}
 

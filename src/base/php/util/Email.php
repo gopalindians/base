@@ -377,7 +377,7 @@ class Email{
 	 */
 	function enableHTML($enable = true){
 		if($enable){
-			$this->contentType = Email::CONTENT_TYPE_HTML;
+			$this->contentType = self::CONTENT_TYPE_HTML;
 			return;
 		}
 
@@ -421,13 +421,13 @@ class Email{
 	private function getHeader(){
 		$header = "";
 
-		$header = $this->appendHeaderEmails($header, Email::FROM, $this->from);
-		$header = $this->appendHeaderEmails($header, Email::CC, $this->cc);
-		$header = $this->appendHeaderEmails($header, Email::BCC, $this->bcc);
-		$header = $this->appendHeaderEmails($header, Email::REPLY, $this->reply);
+		$header = $this->appendHeaderEmails($header, self::FROM, $this->from);
+		$header = $this->appendHeaderEmails($header, self::CC, $this->cc);
+		$header = $this->appendHeaderEmails($header, self::BCC, $this->bcc);
+		$header = $this->appendHeaderEmails($header, self::REPLY, $this->reply);
 
 		if(!empty($this->contentType)){
-			$header .= Email::CONTENT_TYPE.": ".$this->contentType."; charset=".Email::DEFAULT_CHARSET;
+			$header .= self::CONTENT_TYPE.": ".$this->contentType."; charset=".self::DEFAULT_CHARSET;
 		}
 
 		return $header;
@@ -439,7 +439,7 @@ class Email{
 		}
 
 		$header .= $type.": ".$this->getEmails($list);
-		$header .= Email::CLRF;
+		$header .= self::CLRF;
 
 		return $header;
 	}
