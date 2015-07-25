@@ -104,7 +104,7 @@ class Router{
 				throw new RouteFileParseException($file);
 			}
 
-			$this->when($value->when,
+			$this->when($value->when, // FIXME
 						$this->getMethods($value),
 						$this->getController($value, $controllerParams, $viewParams));
 		}
@@ -167,6 +167,16 @@ class Router{
 	}
 
 	/**
+	 * Returns path to resolve. This is the URL without domain and base path.
+	 * Careful, the result does not trim or fix errors in URL, like double slashes!
+	 *
+	 * @return path without base path
+	 */
+	function getPath(){
+		return preg_replace('~\/?'.$this->basePath.'~i', '', $_SERVER['REQUEST_URI']);
+	}
+
+	/**
 	 * Triggers a route with given parameters and methods.
 	 * This method won't redirect to "otherwise" route, when route cannot be resolved!
 	 *
@@ -188,15 +198,15 @@ class Router{
 	}
 
 	private function resolveWithoutRedirect($url = null, array $methods = null){
-		// get route from url
-		$route = '';
+		// get path from url
+		$path = '';
 
 		try{
 			if(!$url){
-				$route = preg_replace('~^/?'.$this->basePath.'$~i', '', $_SERVER['REQUEST_URI']);
+				$path = $this->getPath();
 			}
 			else{
-				$route = $url;
+				$path = $url;
 			}
 		}
 		catch(\Exception $e){
@@ -210,7 +220,7 @@ class Router{
 
 		// resolve
 		foreach($methods AS $method){
-			$this->resolveUrl($route, $method);
+			$this->resolveUrl($path, $method);
 		}
 	}
 

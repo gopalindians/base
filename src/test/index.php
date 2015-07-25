@@ -9,14 +9,11 @@ function exception($e){
 	exit;
 }
 
-// setup database connection
-$db = new base\MySQL('localhost', 'root', '', 'base');
-
 // setup router
 $controllerParams = array('welcome' => 'Mr. X');
 $viewParams = array('some_var' => 'This is some data!');
 
-$router = new base\Router('base/src/test');
+$router = new base\Router('/base/src/test');
 $router->loadRouting('routing.json', $controllerParams, $viewParams);
 
 $router->when('/form',
@@ -28,7 +25,7 @@ $router->when('on//deep////route///',
 			  new base\StaticController(new DeepView()));
 
 $router->when('/triggerMe',
-			  array('POST'),
+			  array('GET'),
 			  new TriggerController());
 
 $router->when('/404',
@@ -36,8 +33,6 @@ $router->when('/404',
 			  new Error404Controller());
 
 $router->otherwise('/404');
-
-$router->trigger('/triggerMe', array('POST')); // always trigger
 
 try{
 	$router->resolve();
@@ -50,6 +45,9 @@ catch(base\RouteUnresolvedException $e){
 }
 
 // TESTS:
-require_once 'test_email.php';
-require_once 'test_pdo.php';
+if($router->getPath() == '/about'){
+	$router->trigger('/triggerMe', array('GET'));
+	require_once 'test_email.php';
+	require_once 'test_pdo.php';
+}
 ?>
