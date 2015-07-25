@@ -49,7 +49,7 @@ class Email{
 		$this->message = $message;
 	}
 
-	private function addEmail(&$list, $email, $name){
+	private function addEmail(array &$list, $email, $name){
 		if($this->emailOrNameExists($list, $email, 0)){
 			return false;
 		}
@@ -59,7 +59,7 @@ class Email{
 		return true;
 	}
 
-	private function emailOrNameExists(&$list, $key, $index){
+	private function emailOrNameExists(array &$list, $key, $index){
 		$key = strtolower(trim($key));
 
 		foreach($list AS $mail){
@@ -71,7 +71,7 @@ class Email{
 		return false;
 	}
 
-	private function removeEmail(&$list, $email){
+	private function removeEmail(array &$list, $email){
 		$email = strtolower(trim($email));
 
 		foreach($list AS $key => $mail){
@@ -84,7 +84,7 @@ class Email{
 		return false;
 	}
 
-	private function getEmail(&$list, $index){
+	private function getEmail(array &$list, $index){
 		if($index == -1){
 			return $list;
 		}
@@ -444,7 +444,7 @@ class Email{
 		return $header;
 	}
 
-	private function getEmails(&$list){
+	private function getEmails(array &$list){
 		$str = "";
 		$first = true;
 

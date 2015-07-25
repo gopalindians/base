@@ -29,7 +29,7 @@ class Router{
 		return array(HttpMethod::GET);
 	}
 
-	private function getParams($params, $selection){
+	private function getParams($params, array $selection){
 		$selected = array();
 
 		foreach($selection AS $value){
@@ -41,12 +41,12 @@ class Router{
 		return $selected;
 	}
 
-	private function getController($route, $controllorParamsSelection, $viewParamsSelection){
+	private function getController($route, array $controllerParamsSelection, array $viewParamsSelection){
 		$controllerParams = array();
 		$viewParams = array();
 
 		if(isset($route->controllerParams)){
-			$controllerParams = $this->getParams($controllorParamsSelection, $route->controllerParams);
+			$controllerParams = $this->getParams($controllerParamsSelection, $route->controllerParams);
 		}
 
 		if(isset($route->viewParams)){
@@ -184,7 +184,7 @@ class Router{
 	 * @throws RouteUnresolvedException when the route cannot be resolved
 	 * @return void
 	 */
-	function trigger($route, $methods = array(HttpMethod::GET)){
+	function trigger($route, array $methods = array(HttpMethod::GET)){
 		$this->resolveWithoutRedirect($route, $methods);
 	}
 

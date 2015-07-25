@@ -62,7 +62,7 @@ abstract class Model{
 	 * @param classname the classname of this class
 	 * @return the json objects if it maps, null otherwise
 	 */
-	static protected function checkJsonObject($post, $classname){
+	static protected function checkJsonObject(array $post, $classname){
 		if(!isset($post[$classname])){
 			return null;
 		}

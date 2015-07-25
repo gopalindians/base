@@ -17,7 +17,7 @@ class FormValidator{
 	 *
 	 * @param data the data to check as an associative array
 	 */
-	function __construct($data){
+	function __construct(array $data){
 		$this->data = $data;
 	}
 
@@ -78,7 +78,7 @@ class FormValidator{
 	 * @param key the key of the field
 	 * @return true if the field could be validated as an email, else false
 	 */
-	function isEmail(string $key){
+	function isEmail($key){
 		if(!isset($this->data[$key])){
 			return false;
 		}

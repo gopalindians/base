@@ -141,7 +141,7 @@ class PDO extends Database{
      * @param params the params to bind, default is null; careful, you cannot use params and bind() together!
      * @return PDOStatement or null on failure
      */
-    function exec($params = null){
+    function exec(array $params = null){
         $result = null;
 
         if($this->query){
