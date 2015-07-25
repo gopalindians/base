@@ -17,6 +17,7 @@ class MySQL extends Database{
      * @param database
      * @param prefix use {prefix} in your queries to replace them, default is ''
      * @param disableAutocommit disables autocommit, default is true
+     * @param charset the database charset, default @see Database
      */
     function __construct($host, $user, $password, $database, $prefix = '', $disableAutocommit = true, $charset = self::DEFAULT_CHARSET){
         $this->con = @new \mysqli($host, $user, $password);
@@ -122,16 +123,6 @@ class MySQL extends Database{
      */
     function rollback(){
         $this->con->rollback();
-    }
-
-    /**
-     * Escapes a string for database insertion.
-     *
-     * @param string the string to escape
-     * @return escaped string
-     */
-    function escape($string){
-        return $this->con->escape_string($string);
     }
 }
 ?>
