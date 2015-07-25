@@ -12,7 +12,7 @@ class RouteFileParseException extends \Exception{
     const CODE = 6;
 
     function __construct($file){
-        \Exception::__construct(self::MESSAGE.$file, self::CODE);
+        parent::__construct(self::MESSAGE.$file, self::CODE);
     }
 }
 ?>

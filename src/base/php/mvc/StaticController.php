@@ -10,7 +10,7 @@ namespace base;
  */
 class StaticController extends Controller{
 	function __construct($view){
-		Controller::__construct(array(), $view);
+		parent::__construct(array(), $view);
 	}
 
 	function resolveGET(array $get){

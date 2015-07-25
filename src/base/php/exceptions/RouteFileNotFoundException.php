@@ -12,7 +12,7 @@ class RouteFileNotFoundException extends \Exception{
     const CODE = 5;
 
     function __construct($file){
-        \Exception::__construct(self::MESSAGE.$file, self::CODE);
+        parent::__construct(self::MESSAGE.$file, self::CODE);
     }
 }
 ?>

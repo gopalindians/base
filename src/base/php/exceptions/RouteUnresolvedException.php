@@ -12,7 +12,7 @@ class RouteUnresolvedException extends \Exception{
 	const CODE = 2;
 
 	function __construct($url = ''){
-		\Exception::__construct(self::MESSAGE.$url, self::CODE);
+		parent::__construct(self::MESSAGE.$url, self::CODE);
 	}
 }
 ?>

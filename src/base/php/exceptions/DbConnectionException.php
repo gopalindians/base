@@ -12,7 +12,7 @@ class DbConnectionException extends \Exception{
     const CODE = 3;
 
     function __construct(){
-        \Exception::__construct(self::MESSAGE, self::CODE);
+        parent::__construct(self::MESSAGE, self::CODE);
     }
 }
 ?>
