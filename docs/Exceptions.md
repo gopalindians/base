@@ -13,3 +13,4 @@ This file lists all possible exceptions and error codes thrown by base.
 | js | AjaxStatusException | - | Thrown if a bad status was returned by ajax request. |
 | js | DataNoJsonException | - | Thrown if an json object cannot be parsed. |
 | js | MethodNotImplementedException | - | Thrown if an "abstract" JavaScript method must be implemented, but hasn't. |
+| php | NavigatioNodeNotFoundException | 7 | Exception thrown when a navigation node could not be found. |
