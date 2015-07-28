@@ -18,7 +18,7 @@ class Router{
 	 * @param basePath optional base path, required to ignore part of routes (URL)
 	 */
 	function __construct($basePath = ''){
-		$this->basePath = $basePath;
+		$this->basePath = preg_replace('~/+~', '', $basePath);
 	}
 
 	private function getMethods($route){
@@ -173,7 +173,7 @@ class Router{
 	 * @return path without base path
 	 */
 	function getPath(){
-		return preg_replace('~\/?'.$this->basePath.'~i', '', $_SERVER['REQUEST_URI']);
+		return preg_replace('~^'.preg_quote($this->basePath).'~i', '', preg_replace('~/+~', '/', $_SERVER['REQUEST_URI']));
 	}
 
 	/**
@@ -274,4 +274,3 @@ class Router{
 	}
 }
 ?>
-
