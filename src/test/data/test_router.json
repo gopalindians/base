@@ -1,0 +1,15 @@
+{
+	"routes":[
+		{
+			"when":"/a",
+			"methods":["GET", "POST"],
+			"controller":"base\\StaticController",
+			"view":"base\\StaticView"
+		},
+		{
+			"when":"/b",
+			"controller":"base\\StaticController",
+			"view":"base\\StaticView"
+		}
+	]
+}

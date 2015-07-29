@@ -12,7 +12,8 @@ namespace base;
  */
 function assertTrue($message, $condition){
 	if(!$condition){
-		throw new \Exception($message);
+		$text = $condition ? 'true' : 'false';
+		throw new \Exception($message."\n".$text);
 	}
 }
 
@@ -26,7 +27,8 @@ function assertTrue($message, $condition){
  */
 function assertFalse($message, $condition){
 	if($condition){
-		throw new \Exception($message);
+		$text = $condition ? 'true' : 'false';
+		throw new \Exception($message."\n".$text);
 	}
 }
 
@@ -40,7 +42,7 @@ function assertFalse($message, $condition){
  */
 function assertNull($message, $condition){
 	if($condition != null){
-		throw new \Exception($message);
+		throw new \Exception($message."\n".$condition);
 	}
 }
 
@@ -54,7 +56,7 @@ function assertNull($message, $condition){
  */
 function assertNotNull($message, $condition){
 	if($condition == null){
-		throw new \Exception($message);
+		throw new \Exception($message."\n".$condition);
 	}
 }
 
@@ -69,7 +71,7 @@ function assertNotNull($message, $condition){
  */
 function assertEqual($message, $a, $b){
 	if($a != $b){
-		throw new \Exception($message);
+		throw new \Exception($message."\n".$a.' != '.$b);
 	}
 }
 
@@ -84,7 +86,7 @@ function assertEqual($message, $a, $b){
  */
 function assertNotEqual($message, $a, $b){
 	if($a == $b){
-		throw new \Exception($message);
+		throw new \Exception($message."\n".$a.' == '.$b);
 	}
 }
 
@@ -98,7 +100,7 @@ function assertNotEqual($message, $a, $b){
  */
 function assertEmpty($message, $condition){
 	if(!empty($condition)){
-		throw new \Exception($message);
+		throw new \Exception($message."\n".$condition);
 	}
 }
 
@@ -112,7 +114,7 @@ function assertEmpty($message, $condition){
  */
 function assertNotEmpty($message, $condition){
 	if(empty($condition)){
-		throw new \Exception($message);
+		throw new \Exception($message."\n".$condition);
 	}
 }
 
@@ -128,12 +130,12 @@ function assertNotEmpty($message, $condition){
 function assertContains($message, $search, $find){
 	if(is_array($search)){
 		if(!isset($search[$find])){
-			throw new \Exception($message);
+			throw new \Exception($message."\n".$search.' find '.$find);
 		}
 	}
 	else{
 		if(strpos($search, $find) === false){
-			throw new \Exception($message);
+			throw new \Exception($message."\n".$search.' find '.$find);
 		}
 	}
 }
@@ -150,12 +152,12 @@ function assertContains($message, $search, $find){
 function assertNotContains($message, $search, $find){
 	if(is_array($search)){
 		if(isset($search[$find])){
-			throw new \Exception($message);
+			throw new \Exception($message."\n".$search.' find '.$find);
 		}
 	}
 	else{
 		if(strpos($search, $find) !== false){
-			throw new \Exception($message);
+			throw new \Exception($message."\n".$search.' find '.$find);
 		}
 	}
 }
