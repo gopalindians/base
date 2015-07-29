@@ -18,11 +18,27 @@ class aTestCase extends base\TestCase{
 	}
 
 	function testA(){
-		
+		base\assertTrue('should be true', false);
 	}
 
 	function testB(){
-		
+		base\assertFalse('assert message', true);
+	}
+
+	function testC(){
+		base\assertContains('string must contain substring', 'Hello World!', 'World');
+	}
+
+	function testD(){
+		base\assertNotContains('string must contain substring', 'Hello World!', 'World');
+	}
+
+	function testE(){
+		base\assertContains('array must contain element', array('a' => 1, 'b' => 2), 'b');
+	}
+
+	function testF(){
+		base\assertContains('array must contain element', array('a' => 1, 'b' => 2), 'c');
 	}
 
 	function testException(){
@@ -42,5 +58,4 @@ class aTestSuite extends base\TestSuite{
 
 $runner = new base\TestRunner();
 $runner->runTestSuite('aTestSuite');
-$runner->report();
 ?>

@@ -94,6 +94,7 @@ class TestRunner{
 
 	/**
 	 * Runs a test suite.
+	 * A report will be printed afterwards.
 	 *
 	 * @param suite the classname of suite to run, must be of type base\TestSuite
 	 * @return void
@@ -108,6 +109,8 @@ class TestRunner{
 		foreach($test->getCases() AS $case){
 			$this->runTestCase($case);
 		}
+
+		$this->report();
 	}
 
 	private function createTestSuite($suite){
@@ -147,10 +150,14 @@ class TestRunner{
 	function report(){
 		if($this->failed){
 			print sprintf(self::TEST_FAILED, $this->failed, $this->tests);
-			return;
 		}
-		
-		print sprintf(self::TEST_SUCCEDED, $this->succeded);
+		else{
+			print sprintf(self::TEST_SUCCEDED, $this->succeded);
+		}
+
+		$this->tests = 0;
+		$this->succeded = 0;
+		$this->failed = 0;
 	}
 }
 ?>
