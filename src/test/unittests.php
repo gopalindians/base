@@ -30,6 +30,17 @@ class aTestCase extends base\TestCase{
 	}
 }
 
+class aTestSuite extends base\TestSuite{
+	const NAME = 'My test suite';
+
+	function __construct(){
+		parent::__construct(self::NAME);
+
+		$this->addCases(array('aTestCase'));
+	}
+}
+
 $runner = new base\TestRunner();
-$runner->runTestCase('aTestCase');
+$runner->runTestSuite('aTestSuite');
+$runner->report();
 ?>
