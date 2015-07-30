@@ -65,7 +65,7 @@ class Router{
 	 * Reads a json configuration to set up routing.
 	 * Json format:
 	 *
-	 * {[
+	 * {"routes":[
 	 *   {'when:'/route',
 	 *    'methods':['GET', 'POST'],
 	 *    'controller':'ControllerClassName',
@@ -77,6 +77,7 @@ class Router{
 	 * Parameters will be passed as an associative array first, even if empty.
 	 * The view will be allways passed last to the control.
 	 * methods, controllerParams, view and viewParams are optional.
+	 * Controller and View will be created in global namespace, you can add namespace.
 	 *
 	 * @param file the file containing the json for routing
 	 * @param controllerParams params used while setting up the controller (optional)
@@ -188,7 +189,7 @@ class Router{
 		$this->resolveWithoutRedirect($route, $methods);
 	}
 
-	private function resolveWithRedirect(){
+	protected function resolveWithRedirect(){
 		try{
 			$this->resolveWithoutRedirect();
 		}
@@ -197,7 +198,7 @@ class Router{
 		}
 	}
 
-	private function resolveWithoutRedirect($url = null, array $methods = null){
+	protected function resolveWithoutRedirect($url = null, array $methods = null){
 		// get path from url
 		$path = '';
 
@@ -224,7 +225,7 @@ class Router{
 		}
 	}
 
-	private function resolveUrl($route, $method){
+	protected function resolveUrl($route, $method){
 		foreach($this->routes AS $value){
 			if($value->matches($route) && in_array($method, $value->getRequestMethods())){
 				switch($method){

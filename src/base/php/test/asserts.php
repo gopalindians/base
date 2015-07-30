@@ -130,12 +130,12 @@ function assertNotEmpty($message, $condition){
 function assertContains($message, $search, $find){
 	if(is_array($search)){
 		if(!isset($search[$find])){
-			throw new \Exception($message."\n".$search.' find '.$find);
+			throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 		}
 	}
 	else{
 		if(strpos($search, $find) === false){
-			throw new \Exception($message."\n".$search.' find '.$find);
+			throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 		}
 	}
 }
@@ -152,13 +152,27 @@ function assertContains($message, $search, $find){
 function assertNotContains($message, $search, $find){
 	if(is_array($search)){
 		if(isset($search[$find])){
-			throw new \Exception($message."\n".$search.' find '.$find);
+			throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 		}
 	}
 	else{
 		if(strpos($search, $find) !== false){
-			throw new \Exception($message."\n".$search.' find '.$find);
+			throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 		}
 	}
+}
+
+/**
+ * Throws an exception and lets a test fail.
+ *
+ * @param message optional message printed on test
+ * @return void
+ */
+function assertFail($message = null){
+	if($message){
+		throw new \Exception($message);
+	}
+
+	throw new \Exception('Test failure.');
 }
 ?>

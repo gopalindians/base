@@ -2,14 +2,42 @@
 	"routes":[
 		{
 			"when":"/a",
-			"methods":["GET", "POST"],
-			"controller":"base\\StaticController",
-			"view":"base\\StaticView"
+			"controller":"ControllerParamsMock"
 		},
 		{
 			"when":"/b",
-			"controller":"base\\StaticController",
-			"view":"base\\StaticView"
+			"methods":["GET", "POST"],
+			"controller":"ControllerParamsMock",
+			"view":"ViewParamsMock"
+		},
+		{
+			"when":"c///x///y//",
+			"controller":"ControllerParamsMock",
+			"view":"ViewParamsMock"
+		},
+		{
+			"when":"/d/foo/bar/:x/:y?/:z?",
+			"controller":"ControllerParamsMock",
+			"view":"ViewParamsMock"
+		},
+		{
+			"when":"/e",
+			"controller":"ControllerParamsMock",
+			"controllerParams":["param0", "param1"],
+			"view":"ViewParamsMock"
+		},
+		{
+			"when":"/f",
+			"controller":"ControllerParamsMock",
+			"view":"ViewParamsMock",
+			"viewParams":["param0", "param1"]
+		},
+		{
+			"when":"/g",
+			"controller":"ControllerParamsMock",
+			"controllerParams":["param0", "param1"],
+			"view":"ViewParamsMock",
+			"viewParams":["param0", "param1"]
 		}
 	]
 }
