@@ -4,7 +4,7 @@ base provides an easy way to implement unit tests. The tests can be run on serve
 
 ## Write test cases
 
-To create a test case, extend the *TestCase* base class. You can set a name to identify the test case. Overwrite *prepare()* and *setup()*. *prepare()* is called once, when the test case is started. *setup()* will be called before each test method.
+To create a test case, extend the *TestCase* base class. You can set a name to identify the test case. Overwrite *prepare()*, *setup()* and *cleanup()*. *prepare()* is called once, when the test case is started. *setup()* will be called before each test method. And *cleanup()* is called after all tests.
 
 A test method must start with *test...*, does not accept parameters and shouldn't return. To test your conditions, use assert functions provided by base.
 
@@ -24,6 +24,10 @@ class ATestCase extends base\TestCase{
 
     function setup(){
         // called before each test method
+    }
+
+    function cleanup(){
+        // called after all tests have been executed
     }
 
     // a test method
@@ -90,3 +94,20 @@ class ATestSuite extends base\TestSuite{
 ```
 
 Test cases are added using *addCases()*, which takes an array and adds them to the suite. If running a suite, the suites name will be printed before test cases.
+
+## Asserts
+
+Here is a list of all available asserts, the first parameter is always a string, shown on failure (not in the list):
+
+| Assert | Parameters |
+| ------ | ---------- |
+| assertTrue | condition(bool) |
+| assertFalse | condition(bool) |
+| assertNull | condition(object, value) |
+| assertNotNull | condition(object, value) |
+| assertEqual | a(object, string, value), b(object, string, value) |
+| assertNotEqual | a(object, string, value), b(object, string, value) |
+| assertEmpty | condition(array, string) |
+| assertNotEmpty | condition(array, string) |
+| assertContains | search(array, string), find(index, string) |
+| assertNotContains | search(array, string), find(index, string) |

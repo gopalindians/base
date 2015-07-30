@@ -44,6 +44,13 @@ class TestRunner{
 		}
 
 		$this->runTests($test);
+
+		try{
+			$test->cleanup();
+		}
+		catch(\Exception $e){
+			$this->failure('cleanup', $e);
+		}
 	}
 
 	private function createTest($case){

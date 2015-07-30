@@ -1,10 +1,9 @@
 <?php
-
 namespace base;
 
-class TestURI extends TestCase{
+class NavigationTest extends TestCase{
 	function __construct(){
-		parent::__construct('Router test');
+		parent::__construct('Navigation test');
 	}
 
 	function prepare(){

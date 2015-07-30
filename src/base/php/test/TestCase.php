@@ -22,6 +22,7 @@ abstract class TestCase{
 
 	abstract function prepare();
 	abstract function setup();
+	abstract function cleanup();
 
 	/**
 	 * @return the name of this test case
