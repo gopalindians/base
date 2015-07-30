@@ -17,7 +17,7 @@ abstract class TestCase{
  	 * @param name optional name shown on test output
 	 */
 	function __construct($name = ''){
-		$this->name;
+		$this->name = $name;
 	}
 
 	abstract function prepare();

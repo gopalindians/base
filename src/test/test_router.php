@@ -11,6 +11,7 @@ require_once 'mock/ViewResolveMock.php';
 class TestRouter extends TestCase{
 	const BASE_PATH = '/base/src/test';
 	const ROUTE_FILE = 'data/test_router.json';
+	const ROUTER_BASE = '/base/src/test';
 
 	private $router;
 	private static $get = array('GET');
@@ -40,8 +41,8 @@ class TestRouter extends TestCase{
 
 		assertNotNull('Route must not be null a.', $this->router->get('/a'));
 		assertNotNull('Route must not be null b.', $this->router->get('b'));
-		assertNotNull('Route must not be null c.', $this->router->get('/c'));
-		assertNotNull('Route must not be null d.', $this->router->get('/d'));
+		assertNotNull('Route must not be null c.', $this->router->get('/c/x/y'));
+		assertNotNull('Route must not be null d.', $this->router->get('/d/foo/bar'));
 		assertNotNull('Route must not be null e.', $this->router->get('/e'));
 		assertNotNull('Route must not be null f.', $this->router->get('/f'));
 		assertNotNull('Route must not be null g.', $this->router->get('/g'));
@@ -49,13 +50,13 @@ class TestRouter extends TestCase{
 		$e = $this->router->get('/e')->getController();
 		$g = $this->router->get('/g')->getController();
 
-		assertContains('param0 must be contained e.', $e->params, 'param0');
-		assertContains('param1 must be contained e.', $e->params, 'param1');
+		assertContainsKey('param0 must be contained e.', $e->params, 'param0');
+		assertContainsKey('param1 must be contained e.', $e->params, 'param1');
 		assertEqual('Params must be equal e.', $e->params['param0'], $controllerParams['param0']);
 		assertEqual('Params must be equal e.', $e->params['param1'], $controllerParams['param1']);
 
-		assertContains('param0 must be contained g.', $g->params, 'param0');
-		assertContains('param1 must be contained g.', $g->params, 'param1');
+		assertContainsKey('param0 must be contained g.', $g->params, 'param0');
+		assertContainsKey('param1 must be contained g.', $g->params, 'param1');
 
 		// cannot test for view params, since controller returns base class View
 	}
@@ -140,7 +141,7 @@ class TestRouter extends TestCase{
 					  self::$get,
 					  new StaticController(new \ViewResolveMock('f')));
 
-		$router->otherwise('/otherwise'); // not tested yet
+		$router->otherwise('/otherwise'); // not tested yet, since hard to mock
 
 		assertNotNull('Route must exists /simpe.', $router->get('/simple'));
 
@@ -151,6 +152,11 @@ class TestRouter extends TestCase{
 		$this->testView($router, '/with/optional/params/', 'e');
 		$this->testView($router, '/with/optional/params/:1', 'e');
 		$this->testView($router, '/with/optional/params/:1/:2', 'e');
+	}
+
+	function testGetPath(){
+		$router = new Router(SELF::ROUTER_BASE);
+		assertEqual('Base path must be stripped.', $router->getPath()->getRoute(), '/');
 	}
 }
 ?>

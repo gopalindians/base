@@ -1,6 +1,6 @@
 <?php
 class ViewParamsMock extends base\View{
-	public $params;
+	public $params; // does not work, since this is a child class of View...
 
 	function __construct(array $params){
 		$this->params = $params;

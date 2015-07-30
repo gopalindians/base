@@ -18,7 +18,7 @@ class Router{
 	 * @param basePath optional base path, required to ignore part of routes (URL)
 	 */
 	function __construct($basePath = ''){
-		$this->basePath = preg_replace('~/+~', '', $basePath);
+		$this->basePath = preg_replace('~/+~', '/', $basePath);
 	}
 
 	private function getMethods($route){
@@ -105,7 +105,7 @@ class Router{
 				throw new RouteFileParseException($file);
 			}
 
-			$this->when($value->when, // FIXME
+			$this->when($value->when,
 						$this->getMethods($value),
 						$this->getController($value, $controllerParams, $viewParams));
 		}
@@ -123,11 +123,11 @@ class Router{
 	 * @return true, when the route was added, false if they existed already
 	 */
 	function when($route, array $method, Controller $controller){
-		if(isset($this->routes[$route])){
+		if($this->get($route, true)){
 			return false;
 		}
 
-		$this->routes[$route] = new Route($route, $method, $controller);
+		$this->routes[] = new Route($route, $method, $controller);
 
 		return true;
 	}
@@ -140,30 +140,42 @@ class Router{
 	 * @return void
 	 */
 	function otherwise($route){
-		$this->redirect = $route;
+		$this->redirect = new URI($route);
 	}
 
 	/**
 	 * Returns a Route object by route.
 	 *
+	 * @param route the route to compare
+	 * @param compareParams set to true to compare route params
 	 * @return Route
 	 */
-	function get($route){
-		if(!isset($this->routes[$route])){
-			return null;
+	function get($route, $compareParams = false){
+		$route = new URI($route);
+
+		foreach($this->routes AS $r){
+			if($r->getRoute()->equals($route, $compareParams)){
+				return $r;
+			}
 		}
 
-		return $this->routes[$route];
+		return null;
 	}
 
 	/**
 	 * Removes a route to resolve.
 	 *
+	 * @param route the route to compare
+	 * @param compareParams set to true to compare route params
 	 * @return void
 	 */
-	function remove($route){
-		if(isset($this->routes[$route])){
-			unset($this->routes[$route]);
+	function remove($route, $compareParams = false){
+		$route = new URI($route);
+
+		foreach($this->routes AS $key => $r){
+			if($r->getRoute()->equals($route, $compareParams)){
+				unset($this->routes[$key]);
+			}
 		}
 	}
 
@@ -174,7 +186,7 @@ class Router{
 	 * @return path without base path
 	 */
 	function getPath(){
-		return preg_replace('~^'.preg_quote($this->basePath).'~i', '', preg_replace('~/+~', '/', $_SERVER['REQUEST_URI']));
+		return new URI(preg_replace('~^'.preg_quote($this->basePath).'~i', '', $_SERVER['REQUEST_URI']));
 	}
 
 	/**
@@ -186,10 +198,10 @@ class Router{
 	 * @return void
 	 */
 	function trigger($route, array $methods = array(HttpMethod::GET)){
-		$this->resolveWithoutRedirect($route, $methods);
+		$this->resolveWithoutRedirect(new URI($route), $methods);
 	}
 
-	protected function resolveWithRedirect(){
+	private function resolveWithRedirect(){
 		try{
 			$this->resolveWithoutRedirect();
 		}
@@ -198,10 +210,8 @@ class Router{
 		}
 	}
 
-	protected function resolveWithoutRedirect($url = null, array $methods = null){
+	private function resolveWithoutRedirect(URI $url = null, array $methods = null){
 		// get path from url
-		$path = '';
-
 		try{
 			if(!$url){
 				$path = $this->getPath();
@@ -225,7 +235,7 @@ class Router{
 		}
 	}
 
-	protected function resolveUrl($route, $method){
+	protected function resolveUrl(URI $route, $method){
 		foreach($this->routes AS $value){
 			if($value->matches($route) && in_array($method, $value->getRequestMethods())){
 				switch($method){

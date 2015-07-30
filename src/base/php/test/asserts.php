@@ -42,7 +42,7 @@ function assertFalse($message, $condition){
  */
 function assertNull($message, $condition){
 	if($condition != null){
-		throw new \Exception($message."\n".$condition);
+		throw new \Exception($message);
 	}
 }
 
@@ -56,7 +56,7 @@ function assertNull($message, $condition){
  */
 function assertNotNull($message, $condition){
 	if($condition == null){
-		throw new \Exception($message."\n".$condition);
+		throw new \Exception($message);
 	}
 }
 
@@ -124,17 +124,17 @@ function assertNotEmpty($message, $condition){
  *
  * @param message the message to print on failure
  * @param search the object to search in
- * @param find the substring or key to find
+ * @param find the substring or value to find
  * @return void
  */
 function assertContains($message, $search, $find){
 	if(is_array($search)){
-		if(!isset($search[$find])){
+		if(!in_array($find, $search)){
 			throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 		}
 	}
 	else{
-		if(strpos($search, $find) === false){
+		if(strpos($search, $find) === FALSE){
 			throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 		}
 	}
@@ -146,19 +146,49 @@ function assertContains($message, $search, $find){
  *
  * @param message the message to print on failure
  * @param search the object to search in
- * @param find the substring or key to find
+ * @param find the substring or value to find
  * @return void
  */
 function assertNotContains($message, $search, $find){
 	if(is_array($search)){
-		if(isset($search[$find])){
+		if(in_array($find, $search)){
 			throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 		}
 	}
 	else{
-		if(strpos($search, $find) !== false){
+		if(strpos($search, $find) !== FALSE){
 			throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 		}
+	}
+}
+
+/**
+ * Checks that an array has a key.
+ * Throws an exception on failure.
+ *
+ * @param message the message to print on failure
+ * @param search the array to search in
+ * @param find the key to find
+ * @return void
+ */
+function assertContainsKey($message, $search, $find){
+	if(!array_key_exists($find, $search)){
+		throw new \Exception($message."\n".implode(',', $search).' find '.$find);
+	}
+}
+
+/**
+ * Checks that an array does not has a key.
+ * Throws an exception on failure.
+ *
+ * @param message the message to print on failure
+ * @param search the array to search in
+ * @param find the key to find
+ * @return void
+ */
+function assertNotContainsKey($message, $search, $find){
+	if(array_key_exists($find, $search)){
+		throw new \Exception($message."\n".implode(',', $search).' find '.$find);
 	}
 }
 

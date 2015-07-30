@@ -8,11 +8,7 @@ namespace base;
  * @author Marvin Blum
  */
 class Route{
-	const PARAM_DELIMITER = '/:';
-	const PARAM_OPTIONAL = '?';
-
 	private $route;
-	private $routeParams;
 	private $requestMethods;
 	private $controller;
 
@@ -30,16 +26,13 @@ class Route{
  	 * @param controller controller for this route
 	 */
 	function __construct($route, array $requestMethods, Controller $controller){
-		$routeParse = $this->resolveRoute($route, true);
-
-		$this->route = $routeParse[0];
-		$this->routeParams = $routeParse[1];
+		$this->route = new URI($route);
 		$this->requestMethods = $requestMethods;
 		$this->controller = $controller;
 	}
 
-	private function resolveRoute($route, $setOptionalParams = false){
-		$route = preg_replace('~/+~', '/', rtrim('/'.$route, '/'));
+	private function resolveRoute(URI $route, $setOptionalParams = false){
+		/*$route = preg_replace('~/+~', '/', rtrim('/'.$route, '/'));
 		$routeEnd = strpos($route, self::PARAM_DELIMITER);
 
 		if($routeEnd === FALSE){
@@ -65,7 +58,7 @@ class Route{
 			}
 		}
 
-		return array(substr($route, 0, $routeEnd), $get);
+		return array(substr($route, 0, $routeEnd), $get);*/
 	}
 
 	/**
@@ -73,15 +66,16 @@ class Route{
 	 *
 	 * @param route route to test
 	 */
-	function matches($route){
-		$routeParse = $this->resolveRoute($route); // make sure there is a slash in front
-		$accept = $this->route == $routeParse[0];
+	function matches(URI $route){
+		//$routeParse = $this->resolveRoute($route); // make sure there is a slash in front
+		//$accept = $this->route == $routeParse[0];
 
-		if($accept && count($routeParse[1]) >= count($this->routeParams)-$this->optionalParams && count($routeParse[1]) <= count($this->routeParams)){
+		//if($accept && count($routeParse[1]) >= count($this->routeParams)-$this->optionalParams && count($routeParse[1]) <= count($this->routeParams)){
+		if($this->route->equals($route)){
 			// set GET variables
-			foreach($routeParse[1] AS $key => $value){
+			/*foreach($routeParse[1] AS $key => $value){
 				$this->params[$this->routeParams[$key]] = urldecode($value);
-			}
+			}*/
 
 			return true;
 		}

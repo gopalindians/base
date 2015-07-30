@@ -13,7 +13,9 @@ namespace base;
  */
 class TestRunner{
 	const GREEN = '<div style="background:#c3ffbb;padding:5px;margin:0 0 5px 0;">';
+	const DARK_GREEN = '<div style="background:#48cc36;padding:5px;margin:0 0 5px 0;">';
 	const RED = '<div style="background:#ffbbbb;padding:5px;margin:0 0 5px 0;">';
+	const DARK_RED = '<div style="background:#fc3030;padding:5px;margin:0 0 5px 0;">';
 	const GREY = '<div style="background:#e1e1e1;padding:5px;margin:0 0 5px 0;">';
 	const END = '</div>';
 
@@ -23,8 +25,8 @@ class TestRunner{
 	const TEST_SUITE_ERROR = self::RED.'Test suite not found <b>%s</b>.'.self::END;
 	const TEST_SUCCESS = self::GREEN.'<b>%s</b> passed!'.self::END;
 	const TEST_FAILURE = self::RED.'<b>%s</b> failed:<br /><pre>%s</pre>'.self::END;
-	const TEST_SUCCEDED = self::GREEN.'=&gt; Result: <b>%s</b> tests passed!'.self::END;
-	const TEST_FAILED = self::RED.'=&gt; Result: <b>%s</b> of <b>%s</b> tests failed!'.self::END;
+	const TEST_SUCCEDED = self::DARK_GREEN.'=&gt; Result: <b>%s</b> tests passed!'.self::END;
+	const TEST_FAILED = self::DARK_RED.'=&gt; Result: <b>%s</b> of <b>%s</b> tests failed!'.self::END;
 
 	private $tests = 0;
 	private $succeded = 0;
